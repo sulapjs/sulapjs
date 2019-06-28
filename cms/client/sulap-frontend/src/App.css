@@ -1,0 +1,55 @@
+.App {
+  text-align: center;
+}
+
+.btn-outline-primary {
+  color: #00b894 !important;
+  border-color: #00b894 !important;
+}
+.btn-outline-primary:focus {
+  color: #00b894 !important;
+  border-color: #00b894 !important;
+}
+.btn-primary{
+  color: white !important;
+  border-color: #00b894 !important;
+  background-color: #00b894 !important;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+  color: #fff !important;
+  background-color: #00b894 !important;
+  border-color: #00b894 !important; /*set the color you want here*/
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active, .btn-outline-primary.active, .open>.dropdown-toggle.btn-outline-primary {
+  color: #fff !important;
+  background-color: #00b894 !important;
+  border-color: #00b894 !important; /*set the color you want here*/
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+a{
+  text-decoration: 'none';
+  text-decoration-color: 'none';
+}
+
+a:hover{
+  text-decoration: 'none';
+  text-decoration-color: 'none';
+}
+
