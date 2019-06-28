@@ -18,16 +18,13 @@ after(function(done) {
 
 describe('EXAMPLE', function() {
   let token = null;
-  let tokenUser = null;
   let tokenNotAllowed = jwtGen.sign({
-    name: 'Admin',
-    email: 'admin@mail.com',
-    role: 'admin'
+    name: 'User',
+    email: 'user@mail.com',
   }, 'fake')
   let tokenNotRecognized = jwt.sign({
-    name: 'Admin',
-    email: 'admin1@mail.com',
-    role: 'admin'
+    name: 'User 1',
+    email: 'user1@mail.com',
   })
   let exampleId = null;
 
@@ -40,6 +37,7 @@ describe('EXAMPLE', function() {
       before(function(done) {
         Example.create({
           name: 'Trial Example',
+          description: 'Trial description',
           created: new Date(),
           updated: new Date()
         })
@@ -120,16 +118,15 @@ describe('EXAMPLE', function() {
   describe('POST /examples', function() {
     before(function(done) {
       const inputUser = {
-        name: 'Admin',
-        email: 'admin@mail.com',
+        name: 'User',
+        email: 'user@mail.com',
         password: '123456',
-        role: 'admin'
       }
       User.create(inputUser)
         .then(newUser => {
-          const { name, email, role } = newUser;
+          const { _id, name, email } = newUser;
           token = jwt.sign({
-            name, email, role
+            _id, name, email
           })
           done();
         })
@@ -142,6 +139,7 @@ describe('EXAMPLE', function() {
       it('should response an object (message and newExample) with status 201', function(done) {
         const inputExample = {
           name: 'New Example',
+          description: 'Trial description',
         }
         chai
           .request(app)
@@ -155,8 +153,11 @@ describe('EXAMPLE', function() {
             expect(res.body).to.have.property('newExample');
             expect(res.body.newExample).to.have.property('_id');
             expect(res.body.newExample).to.have.property('name');
+            expect(res.body.newExample).to.have.property('description');
+            expect(res.body.newExample).to.have.property('refId');
             expect(res.body.newExample).to.have.property('created');
             expect(res.body.newExample).to.have.property('updated');
+            expect(res.body.newExample.refId).to.be.an('object');
             done();
           })
           .catch(err => {
@@ -165,29 +166,11 @@ describe('EXAMPLE', function() {
       })
     })
     describe('ERROR', function() {
-      before(function(done) {
-        const inputUser = {
-          name: 'New User',
-          email: 'user@mail.com',
-          password: '123456',
-          role: 'normalUser'
-        }
-        User.create(inputUser)
-          .then(newUser => {
-            const { name, email, role } = newUser;
-            tokenUser = jwt.sign({
-              name, email, role
-            })
-            done();
-          })
-          .catch(err => {
-            throw err;
-          })
-      })
       describe('VALIDATION', function() {
         it('should response an object (message: Example validation failed: name: required) with status 400', function(done) {
           const inputExample = {
             name: '',
+            description: 'Trial description',
           }
           chai
             .request(app)
@@ -209,6 +192,7 @@ describe('EXAMPLE', function() {
         it('should response an object (message: no token assigned) with status 400', function(done) {
           const inputExample = {
             name: 'New Example',
+            description: 'Trial description',
           }
           chai
             .request(app)
@@ -227,6 +211,7 @@ describe('EXAMPLE', function() {
         it('should response an object (message: not allowed to access) with status 400. Note: wrong secret jwt', function(done) {
           const inputExample = {
             name: 'New Example',
+            description: 'Trial description',
           }
           chai
             .request(app)
@@ -246,6 +231,7 @@ describe('EXAMPLE', function() {
         it('should response an object (message: not recognized input data) with status 400. Note: not registered in database', function(done) {
           const inputExample = {
             name: 'New Example',
+            description: 'Trial description',
           }
           chai
             .request(app)
@@ -271,6 +257,7 @@ describe('EXAMPLE', function() {
       before(function(done) {
         Example.create({
           name: 'Trial Example',
+          description: 'Trial description',
           created: new Date(),
           updated: new Date()
         })
@@ -286,6 +273,7 @@ describe('EXAMPLE', function() {
       it('should response an object (message and updatedExample) with status 201. Note: UPDATE PUT', function(done) {
         const inputExample = {
           name: 'Trial Example edited from PUT',
+          description: 'Trial description',
         }
         chai
           .request(app)
@@ -309,6 +297,7 @@ describe('EXAMPLE', function() {
       it('should response an object (message and updatedExample) with status 201. Note: UPDATE PATCH', function(done) {
         const inputExample = {
           name: 'Trial Example edited from PATCH',
+          description: 'Trial description',
         }
         chai
           .request(app)
@@ -354,6 +343,7 @@ describe('EXAMPLE', function() {
       before(function(done) {
         Example.create({
           name: 'Trial Example',
+          description: 'Trial description',
           created: new Date(),
           updated: new Date()
         })
@@ -370,6 +360,7 @@ describe('EXAMPLE', function() {
         it('should response an object (message: Example validation failed: name: required) with status 400. Note: UPDATE PUT', function(done) {
           const inputExample = {
             name: '',
+            description: 'Trial description',
           }
           chai
             .request(app)
@@ -386,10 +377,10 @@ describe('EXAMPLE', function() {
               console.log(err);
             })
         })
-        //-----NANTI KESINI LAGI
         it('should response an object (message: Example validation failed: name: required) with status 400. Note: UPDATE PATCH', function(done) {
           const inputExample = {
             name: '',
+            description: 'Trial description',
           }
           chai
             .request(app)
@@ -412,6 +403,7 @@ describe('EXAMPLE', function() {
           it('should response an object (message: no token assigned) with status 400', function(done) {
             const inputExample = {
               name: 'Trial Example edited from PUT',
+              description: 'Trial description',
             }
             chai
               .request(app)
@@ -430,6 +422,7 @@ describe('EXAMPLE', function() {
           it('should response an object (message: not allowed to access) with status 400. Note: wrong secret jwt', function(done) {
             const inputExample = {
               name: 'Trial Example edited from PUT',
+              description: 'Trial description',
             }
             chai
               .request(app)
@@ -449,6 +442,7 @@ describe('EXAMPLE', function() {
           it('should response an object (message: not recognized input data) with status 400. Note: not registered in database', function(done) {
             const inputExample = {
               name: 'Trial Example edited from PUT',
+              description: 'Trial description',
             }
             chai
               .request(app)
@@ -470,6 +464,7 @@ describe('EXAMPLE', function() {
           it('should response an object (message: no token assigned) with status 400', function(done) {
             const inputExample = {
               name: 'Trial Example edited from PATCH',
+              description: 'Trial description',
             }
             chai
               .request(app)
@@ -488,6 +483,7 @@ describe('EXAMPLE', function() {
           it('should response an object (message: not allowed to access) with status 400. Note: wrong secret jwt', function(done) {
             const inputExample = {
               name: 'Trial Example edited from PATCH',
+              description: 'Trial description',
             }
             chai
               .request(app)
@@ -507,6 +503,7 @@ describe('EXAMPLE', function() {
           it('should response an object (message: not recognized input data) with status 400. Note: not registered in database', function(done) {
             const inputExample = {
               name: 'Trial Example edited',
+              description: 'Trial description',
             }
             chai
               .request(app)
@@ -634,6 +631,7 @@ describe('EXAMPLE', function() {
         it('should response an object (message: data not found) with status 404. Note: UPDATE PUT', function(done) {
           const inputExample = {
             name: 'Trial Example edited from PUT',
+            description: 'Trial description',
           }
           chai
             .request(app)
@@ -653,6 +651,7 @@ describe('EXAMPLE', function() {
         it('should response an object (message: data not found) with status 404. Note: UPDATE PATCH', function(done) {
           const inputExample = {
             name: 'Trial Example edited from PUT',
+            description: 'Trial description',
           }
           chai
             .request(app)
