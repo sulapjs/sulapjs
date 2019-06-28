@@ -43,7 +43,7 @@ describe('AUTHENTICATION', function() {
             console.log(err);
           })
       })
-      it('should response an object (message and newUser with role: customer)with status 201', function(done) {
+      it('should response an object (message and newUser with role: normalUser)with status 201', function(done) {
         const register = {
           name: 'New User',
           email: 'user@mail.com',
@@ -64,7 +64,7 @@ describe('AUTHENTICATION', function() {
             expect(res.body.newUser).to.have.property('password');
             expect(res.body.newUser).to.have.property('role');
             expect(res.body.newUser.password).to.not.equal(register.password);
-            expect(res.body.newUser.role).to.equal('customer');
+            expect(res.body.newUser.role).to.equal('normalUser');
             done();
           })
           .catch(err => {
