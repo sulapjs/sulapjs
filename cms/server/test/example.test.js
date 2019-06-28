@@ -5,7 +5,7 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 const app = require('../app');
-const Example = require('../models/example');
+const Example = require('../models/EXAMPLE');
 const User = require('../models/user');
 const clearExample = require('../helpers/clearExample');
 const clearUser = require('../helpers/clearUser');
@@ -32,7 +32,7 @@ describe('EXAMPLE', function() {
     clearUser(done);
   })
 
-  describe('GET /examples and GET /examples/:id', function() {
+  describe('GET /EXAMPLEs and GET /EXAMPLEs/:id', function() {
     describe('SUCCESS', function() {
       before(function(done) {
         Example.create({
@@ -41,8 +41,8 @@ describe('EXAMPLE', function() {
           created: new Date(),
           updated: new Date()
         })
-          .then(function(newExample) {
-            exampleId = newExample._id;
+          .then(function(newEXAMPLE) {
+            exampleId = newEXAMPLE._id;
             done();
           })
           .catch(function(err) {
@@ -52,30 +52,30 @@ describe('EXAMPLE', function() {
       after(function(done) {
         clearExample(done);
       })
-      it('should response an object (message, examples) with status 200', function(done) {
+      it('should response an object (message, EXAMPLEs) with status 200', function(done) {
         chai
           .request(app)
-          .get('/examples')
+          .get('/EXAMPLEs')
           .then(res => {
             expect(res).to.have.status(200);
             expect(res.body).to.be.an('object');
             expect(res.body).to.have.property('message');
-            expect(res.body).to.have.property('examples');
+            expect(res.body).to.have.property('EXAMPLEs');
             done();
           })
           .catch(err => {
             console.log(err);
           })
       })
-      it('should response an object (message, example) with status 200', function(done) {
+      it('should response an object (message, EXAMPLE) with status 200', function(done) {
         chai
           .request(app)
-          .get(`/examples/${exampleId}`)
+          .get(`/EXAMPLEs/${exampleId}`)
           .then(res => {
             expect(res).to.have.status(200);
             expect(res.body).to.be.an('object');
             expect(res.body).to.have.property('message');
-            expect(res.body).to.have.property('example');
+            expect(res.body).to.have.property('EXAMPLE');
             done();
           })
           .catch(err => {
@@ -87,7 +87,7 @@ describe('EXAMPLE', function() {
       it('should response an object (message) with status 404', function(done) {
         chai
           .request(app)
-          .get('/examples')
+          .get('/EXAMPLEs')
           .then(res => {
             expect(res).to.have.status(404);
             expect(res.body).to.be.an('object');
@@ -101,7 +101,7 @@ describe('EXAMPLE', function() {
       it('should response an object (message) with status 404', function(done) {
         chai
           .request(app)
-          .get(`/examples/${exampleId}`)
+          .get(`/EXAMPLEs/${exampleId}`)
           .then(res => {
             expect(res).to.have.status(404);
             expect(res.body).to.be.an('object');
@@ -115,7 +115,7 @@ describe('EXAMPLE', function() {
     })
   })
 
-  describe('POST /examples', function() {
+  describe('POST /EXAMPLEs', function() {
     before(function(done) {
       const inputUser = {
         name: 'User',
@@ -136,28 +136,28 @@ describe('EXAMPLE', function() {
     })
 
     describe('SUCCESS', function() {
-      it('should response an object (message and newExample) with status 201', function(done) {
+      it('should response an object (message and newEXAMPLE) with status 201', function(done) {
         const inputExample = {
           name: 'New Example',
           description: 'Trial description',
         }
         chai
           .request(app)
-          .post('/examples')
+          .post('/EXAMPLEs')
           .set({ token })
           .send(inputExample)
           .then(res => {
             expect(res).to.have.status(201);
             expect(res.body).to.be.an('object');
             expect(res.body).to.have.property('message');
-            expect(res.body).to.have.property('newExample');
-            expect(res.body.newExample).to.have.property('_id');
-            expect(res.body.newExample).to.have.property('name');
-            expect(res.body.newExample).to.have.property('description');
-            expect(res.body.newExample).to.have.property('refId');
-            expect(res.body.newExample).to.have.property('created');
-            expect(res.body.newExample).to.have.property('updated');
-            expect(res.body.newExample.refId).to.be.an('object');
+            expect(res.body).to.have.property('newEXAMPLE');
+            expect(res.body.newEXAMPLE).to.have.property('_id');
+            expect(res.body.newEXAMPLE).to.have.property('name');
+            expect(res.body.newEXAMPLE).to.have.property('description');
+            expect(res.body.newEXAMPLE).to.have.property('refId');
+            expect(res.body.newEXAMPLE).to.have.property('created');
+            expect(res.body.newEXAMPLE).to.have.property('updated');
+            expect(res.body.newEXAMPLE.refId).to.be.an('object');
             done();
           })
           .catch(err => {
@@ -174,7 +174,7 @@ describe('EXAMPLE', function() {
           }
           chai
             .request(app)
-            .post('/examples')
+            .post('/EXAMPLEs')
             .set({ token })
             .send(inputExample)
             .then(res => {
@@ -196,7 +196,7 @@ describe('EXAMPLE', function() {
           }
           chai
             .request(app)
-            .post('/examples')
+            .post('/EXAMPLEs')
             .send(inputExample)
             .then(res => {
               expect(res).to.have.status(400);
@@ -215,7 +215,7 @@ describe('EXAMPLE', function() {
           }
           chai
             .request(app)
-            .post('/examples')
+            .post('/EXAMPLEs')
             .set({ token: tokenNotAllowed })
             .send(inputExample)
             .then(res => {
@@ -235,7 +235,7 @@ describe('EXAMPLE', function() {
           }
           chai
             .request(app)
-            .post('/examples')
+            .post('/EXAMPLEs')
             .set({ token: tokenNotRecognized })
             .send(inputExample)
             .then(res => {
@@ -252,7 +252,7 @@ describe('EXAMPLE', function() {
     })
   })
 
-  describe('PUT PATCH DELETE /examples/:id', function() {
+  describe('PUT PATCH DELETE /EXAMPLEs/:id', function() {
     describe('SUCCESS', function() {
       before(function(done) {
         Example.create({
@@ -261,8 +261,8 @@ describe('EXAMPLE', function() {
           created: new Date(),
           updated: new Date()
         })
-          .then(function(newExample) {
-            exampleId = newExample._id;
+          .then(function(newEXAMPLE) {
+            exampleId = newEXAMPLE._id;
             done();
           })
           .catch(function(err) {
@@ -270,68 +270,68 @@ describe('EXAMPLE', function() {
           })
       })
 
-      it('should response an object (message and updatedExample) with status 201. Note: UPDATE PUT', function(done) {
+      it('should response an object (message and updatedEXAMPLE) with status 201. Note: UPDATE PUT', function(done) {
         const inputExample = {
           name: 'Trial Example edited from PUT',
           description: 'Trial description',
         }
         chai
           .request(app)
-          .put(`/examples/${exampleId}`)
+          .put(`/EXAMPLEs/${exampleId}`)
           .set({ token })
           .send(inputExample)
           .then(res => {
             expect(res).to.have.status(201);
             expect(res.body).to.be.an('object');
             expect(res.body).to.have.property('message');
-            expect(res.body).to.have.property('updatedExample');
-            expect(res.body.updatedExample).to.have.property('_id');
-            expect(res.body.updatedExample).to.have.property('name');
-            expect(res.body.updatedExample).to.have.property('updated');
+            expect(res.body).to.have.property('updatedEXAMPLE');
+            expect(res.body.updatedEXAMPLE).to.have.property('_id');
+            expect(res.body.updatedEXAMPLE).to.have.property('name');
+            expect(res.body.updatedEXAMPLE).to.have.property('updated');
             done();
           })
           .catch(err => {
             console.log(err);
           })
       })
-      it('should response an object (message and updatedExample) with status 201. Note: UPDATE PATCH', function(done) {
+      it('should response an object (message and updatedEXAMPLE) with status 201. Note: UPDATE PATCH', function(done) {
         const inputExample = {
           name: 'Trial Example edited from PATCH',
           description: 'Trial description',
         }
         chai
           .request(app)
-          .patch(`/examples/${exampleId}`)
+          .patch(`/EXAMPLEs/${exampleId}`)
           .set({ token })
           .send(inputExample)
           .then(res => {
             expect(res).to.have.status(201);
             expect(res.body).to.be.an('object');
             expect(res.body).to.have.property('message');
-            expect(res.body).to.have.property('updatedExample');
-            expect(res.body.updatedExample).to.have.property('_id');
-            expect(res.body.updatedExample).to.have.property('name');
-            expect(res.body.updatedExample).to.have.property('updated');
+            expect(res.body).to.have.property('updatedEXAMPLE');
+            expect(res.body.updatedEXAMPLE).to.have.property('_id');
+            expect(res.body.updatedEXAMPLE).to.have.property('name');
+            expect(res.body.updatedEXAMPLE).to.have.property('updated');
             done();
           })
           .catch(err => {
             console.log(err);
           })
       })
-      it('should response an object (message and deletedExample) with status 200. Note: DELETE', function(done) {
+      it('should response an object (message and deletedEXAMPLE) with status 200. Note: DELETE', function(done) {
         chai
           .request(app)
-          .delete(`/examples/${exampleId}`)
+          .delete(`/EXAMPLEs/${exampleId}`)
           .set({ token })
           .then(res => {
             expect(res).to.have.status(200);
             expect(res.body).to.be.an('object');
             expect(res.body).to.have.property('message');
-            expect(res.body).to.have.property('deletedExample');
-            expect(res.body.deletedExample).to.have.property('_id');
-            expect(res.body.deletedExample).to.have.property('name');
-            expect(res.body.deletedExample).to.have.property('created');
-            expect(res.body.deletedExample).to.have.property('updated');
+            expect(res.body).to.have.property('deletedEXAMPLE');
+            expect(res.body.deletedEXAMPLE).to.have.property('_id');
+            expect(res.body.deletedEXAMPLE).to.have.property('name');
+            expect(res.body.deletedEXAMPLE).to.have.property('created');
+            expect(res.body.deletedEXAMPLE).to.have.property('updated');
             done();
           })
           .catch(err => {
@@ -347,8 +347,8 @@ describe('EXAMPLE', function() {
           created: new Date(),
           updated: new Date()
         })
-          .then(function(newExample) {
-            exampleId = newExample._id;
+          .then(function(newEXAMPLE) {
+            exampleId = newEXAMPLE._id;
             done();
           })
           .catch(function(err) {
@@ -364,7 +364,7 @@ describe('EXAMPLE', function() {
           }
           chai
             .request(app)
-            .put(`/examples/${exampleId}`)
+            .put(`/EXAMPLEs/${exampleId}`)
             .set({ token })
             .send(inputExample)
             .then(res => {
@@ -384,7 +384,7 @@ describe('EXAMPLE', function() {
           }
           chai
             .request(app)
-            .patch(`/examples/${exampleId}`)
+            .patch(`/EXAMPLEs/${exampleId}`)
             .set({ token })
             .send(inputExample)
             .then(res => {
@@ -407,7 +407,7 @@ describe('EXAMPLE', function() {
             }
             chai
               .request(app)
-              .put(`/examples/${exampleId}`)
+              .put(`/EXAMPLEs/${exampleId}`)
               .send(inputExample)
               .then(res => {
                 expect(res).to.have.status(400);
@@ -426,7 +426,7 @@ describe('EXAMPLE', function() {
             }
             chai
               .request(app)
-              .put(`/examples/${exampleId}`)
+              .put(`/EXAMPLEs/${exampleId}`)
               .set({ token: tokenNotAllowed })
               .send(inputExample)
               .then(res => {
@@ -446,7 +446,7 @@ describe('EXAMPLE', function() {
             }
             chai
               .request(app)
-              .put(`/examples/${exampleId}`)
+              .put(`/EXAMPLEs/${exampleId}`)
               .set({ token: tokenNotRecognized })
               .send(inputExample)
               .then(res => {
@@ -468,7 +468,7 @@ describe('EXAMPLE', function() {
             }
             chai
               .request(app)
-              .patch(`/examples/${exampleId}`)
+              .patch(`/EXAMPLEs/${exampleId}`)
               .send(inputExample)
               .then(res => {
                 expect(res).to.have.status(400);
@@ -487,7 +487,7 @@ describe('EXAMPLE', function() {
             }
             chai
               .request(app)
-              .patch(`/examples/${exampleId}`)
+              .patch(`/EXAMPLEs/${exampleId}`)
               .set({ token: tokenNotAllowed })
               .send(inputExample)
               .then(res => {
@@ -507,7 +507,7 @@ describe('EXAMPLE', function() {
             }
             chai
               .request(app)
-              .patch(`/examples/${exampleId}`)
+              .patch(`/EXAMPLEs/${exampleId}`)
               .set({ token: tokenNotRecognized })
               .send(inputExample)
               .then(res => {
@@ -525,7 +525,7 @@ describe('EXAMPLE', function() {
           it('should response an object (message: no token assigned) with status 400', function(done) {
             chai
               .request(app)
-              .delete(`/examples/${exampleId}`)
+              .delete(`/EXAMPLEs/${exampleId}`)
               .then(res => {
                 expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
@@ -539,7 +539,7 @@ describe('EXAMPLE', function() {
           it('should response an object (message: not allowed to access) with status 400. Note: wrong secret jwt', function(done) {
             chai
               .request(app)
-              .delete(`/examples/${exampleId}`)
+              .delete(`/EXAMPLEs/${exampleId}`)
               .set({ token: tokenNotAllowed })
               .then(res => {
                 expect(res).to.have.status(400);
@@ -554,7 +554,7 @@ describe('EXAMPLE', function() {
           it('should response an object (message: not recognized input data) with status 400. Note: not registered in database', function(done) {
             chai
               .request(app)
-              .delete(`/examples/${exampleId}`)
+              .delete(`/EXAMPLEs/${exampleId}`)
               .set({ token: tokenNotRecognized })
               .then(res => {
                 expect(res).to.have.status(400);
@@ -575,7 +575,7 @@ describe('EXAMPLE', function() {
       //     }
       //     chai
       //       .request(app)
-      //       .put(`/examples/${exampleId}`)
+      //       .put(`/EXAMPLEs/${exampleId}`)
       //       .set({ token: tokenUser })
       //       .send(inputExample)
       //       .then(res => {
@@ -594,7 +594,7 @@ describe('EXAMPLE', function() {
       //     }
       //     chai
       //       .request(app)
-      //       .patch(`/examples/${exampleId}`)
+      //       .patch(`/EXAMPLEs/${exampleId}`)
       //       .set({ token: tokenUser })
       //       .send(inputExample)
       //       .then(res => {
@@ -610,7 +610,7 @@ describe('EXAMPLE', function() {
       //   it('should response an object (message: unauthorized to access) with status 401. Note: DELETE', function(done) {
       //     chai
       //       .request(app)
-      //       .delete(`/examples/${exampleId}`)
+      //       .delete(`/EXAMPLEs/${exampleId}`)
       //       .set({ token: tokenUser })
       //       .then(res => {
       //         expect(res).to.have.status(401);
@@ -635,7 +635,7 @@ describe('EXAMPLE', function() {
           }
           chai
             .request(app)
-            .put(`/examples/${exampleId}`)
+            .put(`/EXAMPLEs/${exampleId}`)
             .set({ token })
             .send(inputExample)
             .then(res => {
@@ -655,7 +655,7 @@ describe('EXAMPLE', function() {
           }
           chai
             .request(app)
-            .patch(`/examples/${exampleId}`)
+            .patch(`/EXAMPLEs/${exampleId}`)
             .set({ token })
             .send(inputExample)
             .then(res => {
@@ -671,7 +671,7 @@ describe('EXAMPLE', function() {
         it('should response an object (message: data not found) with status 404. Note: DELETE', function(done) {
           chai
             .request(app)
-            .delete(`/examples/${exampleId}`)
+            .delete(`/EXAMPLEs/${exampleId}`)
             .set({ token })
             .then(res => {
               expect(res).to.have.status(404);
