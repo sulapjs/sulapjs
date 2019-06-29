@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = {
-    sign: function(_id, name) {
+    sign: function(obj) {
         // process.env.JWT_SECRET
-        return jwt.sign({ _id, name } , 'sulapjs')
+        return jwt.sign(obj, 'sulapjs')
     },
 
     decode: function(accesstoken) {

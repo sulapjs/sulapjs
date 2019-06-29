@@ -1,6 +1,6 @@
 const User = require('../models/user');
-const sign = require('../helpers/jwt');
-const decrypt = require('../helpers/bcrypt');
+const { sign } = require('../helpers/jwt');
+const { decrypt } = require('../helpers/bcrypt');
 
 class AuthController {
   static register(req, res, next) {
@@ -53,13 +53,13 @@ class AuthController {
       .then(foundUser => {
         if (!foundUser) {
           res
-            .status(404)
+            .status(400)
             .json({
               message: 'User not found'
             });
         } else {
           if (decrypt(req.body.password, foundUser.password)) {
-            const token = sign(foundUser._id, foundUser.name, foundUser.role);
+            const token = sign({_id: foundUser._id, name: foundUser.name}, foundUser.role);
 
             res
               .status(200)
@@ -69,7 +69,7 @@ class AuthController {
               });
           } else {
             res
-              .status(401)
+              .status(400)
               .json({
                 message: 'Wrong password'
               });
