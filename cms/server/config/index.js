@@ -1,5 +1,5 @@
 //this file is for dynamic file naming
 
 module.exports ={
-    mongoUrl: process.env.MONGO_URL || 'mongodb://localhost/sulap-example'
+    mongoUrl: process.env.MONGO_URL || 'mongodb://localhost/sulap-example_'+ process.env.NODE_ENV
 }

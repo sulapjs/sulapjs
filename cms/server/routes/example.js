@@ -1,14 +1,18 @@
 const controller = require('../controllers/example')
 const router = require('express').Router()
-//const {authenticate, authorize} = require('../middlewares/auth.js')
-//router.use(authenticate)
+const authenticate = require('../middlewares/authentication')
+const authorize = require('../middlewares/authorization')
+
 router.get('/', controller.findAll)
+router.get('/:id', controller.findOne)
+
+router.use(authenticate)
 router.post('/', controller.create)
 
 //authorization
-//router.use('/:id', authorize)
-router.get('/:id', controller.findOne)
-router.patch('/:id', controller.updateOne)
+router.use('/:id', authorize)
+router.patch('/:id', controller.updateOnePatch)
+router.put('/:id', controller.updateOnePut)
 router.delete('/:id', controller.deleteOne)
 
 module.exports = router

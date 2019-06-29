@@ -59,7 +59,11 @@ class AuthController {
             });
         } else {
           if (decrypt(req.body.password, foundUser.password)) {
-            const token = sign({_id: foundUser._id, name: foundUser.name}, foundUser.role);
+            const token = sign({
+              _id: foundUser._id, 
+              name: foundUser.name,
+              email: foundUser.email
+            }, foundUser.role);
 
             res
               .status(200)

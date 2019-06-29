@@ -2,9 +2,9 @@ const router = require('express').Router()
 const exampleRouter = require('./example')
 const AuthController = require('../controllers/auth')
 
-router.use('/examples', exampleRouter);
 router.post('/register', AuthController.register);
 router.post('/login', AuthController.login);
+router.use('/EXAMPLEs', exampleRouter);
 
 router.get('/*', (req,res) => {
     res.status(404).json({
