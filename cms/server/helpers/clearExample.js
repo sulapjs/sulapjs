@@ -1,4 +1,4 @@
-const Example = require('../models/example');
+const Example = require('../models/EXAMPLE');
 
 module.exports = function(done) {
   if (process.env.NODE_ENV === 'test') {
