@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Container, Table, Button, Row, Col, Modal, Form } from 'react-bootstrap'
+import RowTable from './RowTableNewModel';
 
 function NewModel(props) {
 
     const [ showModal, setShowModal ] = useState(false)
+    const headerTable = ['Nama', 'Price', 'Description']
+    const rowTable = [{ name:'nasi', price:'10.000', description:'enak' }, { name:'pisang', price:'10.000', description:'enak  sekali' }]
 
     function handleClose() {
         setShowModal(false);
@@ -31,25 +34,16 @@ function NewModel(props) {
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Description</th>
+                                    <th>#</th>
+                                    { headerTable.map( el =>{
+                                        return <th> {el} </th>
+                                    })}
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                <td>1</td>
-                                <td>Nasi</td>
-                                <td>Rp.10.0000</td>
-                                <td>Enak</td>
-                                </tr>
-                                <tr>
-                                <td>1</td>
-                                <td>Nasi</td>
-                                <td>Rp.10.0000</td>
-                                <td>Enak</td>
-                                </tr>
+                                { rowTable.map( (row, index) => {
+                                    return <RowTable value={ row } index={index} key={ index }/>
+                                }) }
                             </tbody>
                         </Table>
                     </div>
