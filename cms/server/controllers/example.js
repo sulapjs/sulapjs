@@ -142,7 +142,10 @@ class ExampleController {
         
         Example.findOneAndDelete({ _id: id })
         .then(exampleDeleted => {
-            res.status(200).json(exampleDeleted)
+            res.status(200).json({
+                deletedEXAMPLE: exampleDeleted,
+                message: 'findOneAndDeleteExample success'
+            })
         })
         .catch(err => {
             res.status(500).json({

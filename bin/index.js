@@ -1,21 +1,43 @@
 #! /usr/bin/env node
 
-console.log('dari server')
-const argv = require('yargs').argv
+const yargs = require('yargs')
 
-console.log(argv)
+//commands
+const jreng = require('../lib/commands/jreng')
+const bikinin = require('../lib/commands/bikinin')
 
-if(argv._[0] === 'jreng') {
-    console.log('create nih')
-    if(argv._[1] === undefined) {
-        //kalau namanya tidak ada
-        console.log("input nama dongz")
-    } else {
-        //input function later
-        console.log('namanya ini yaaa --> ', argv._[1])
-    }
-} else if(argv._[0] === 'server') {
-    console.log('server nih')
-} else {
-    console.log('masuk else')
-}
+require('yargonaut')
+    .style('blue')
+    .style('yellow', 'required')
+    .helpStyle('green')
+    .errorsStyle('red')
+yargs.version('0.1')
+
+
+//jreng
+yargs.command({
+    command: 'jreng',
+    describe: 'buat server dan client',
+    type: String,
+    handler: (argv) => jreng(argv)
+})
+
+//bikinin
+yargs.command({
+    command: 'bikinin',
+    describe: 'bikinin model dll',
+    builder: {
+        model: {
+            type: 'string',
+            demandOption: true
+        },
+        attributes: {
+            type: 'string',
+            demandOption: true
+        }
+    },
+    handler: argv => bikinin(argv)
+})
+
+
+yargs.argv
