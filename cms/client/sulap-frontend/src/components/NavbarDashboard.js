@@ -13,7 +13,7 @@ function NavbarHeader(props) {
                     <Col lg={10}>
                         <Navbar>
                             <Nav className='d-flex align-items-center'>
-                                <h5> <b> Helloo, </b> monyet </h5>
+                                <h5> <b> Helloo, </b> { localStorage.getItem('name') } </h5>
                             </Nav>
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">

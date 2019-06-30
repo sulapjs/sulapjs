@@ -4,7 +4,7 @@ import Login from './views/Login';
 import Register from './views/Register';
 import Dashboard from './views/Dashboard';
 import Home from './views/Home';
-import { Route } from 'react-router-dom';
+import { Link, Route, Redirect } from 'react-router-dom';
 
 function App() {
   return (
@@ -12,9 +12,30 @@ function App() {
         <Route path="/" exact component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
-        <Route path="/dashboard" component={Dashboard} />
+        <PrivateRoute path="/dashboard" component={Dashboard} />
     </>
   );
 }
+
+function PrivateRoute({ component: Component, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+          localStorage.getItem('token') ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              //state: { from: props.location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}
+
 
 export default App;
