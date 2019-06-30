@@ -20,5 +20,10 @@
     "url": "https://github.com/sulapjs/sulapjs/issues"
   },
   "homepage": "https://github.com/sulapjs/sulapjs#readme",
-  "dependencies": {}
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "ora": "^3.4.0",
+    "yargonaut": "^1.1.4",
+    "yargs": "^13.2.4"
+  }
 }
