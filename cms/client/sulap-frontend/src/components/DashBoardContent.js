@@ -5,6 +5,8 @@ import ProductModul from './ProductModelExample';
 import ProductModelDetail from './ModelDetail';
 //new-component
 
+//new-component
+
 function DashBoardContent(props) {
 
     const linkPath = props.match.params.id
