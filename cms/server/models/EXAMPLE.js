@@ -7,7 +7,6 @@ const exampleSchema = new Schema({
     exampleKey2: {
         type: String,
     },
-    
     name: {
         type: String,
         required: [true, 'name is required']
@@ -15,15 +14,13 @@ const exampleSchema = new Schema({
     description: {
         type: String,
     },
-    //
+    //*regex_models*//
     created: {
         type: Date,
     },
     updated: {
         type: Date,
     },
-
-
     refId: {
         required: [true, 'user must be logged in'],
         type: Schema.Types.ObjectId, ref: 'User'
