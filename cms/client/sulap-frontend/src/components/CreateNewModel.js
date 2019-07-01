@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Row, Col, Form, Button, Table } from 'react-bootstrap';
 
 export default function CreateNewModel(props) {
     
@@ -9,6 +9,8 @@ export default function CreateNewModel(props) {
 
     function addMore(e){
         e.preventDefault()
+
+        console.log(keyModel, dataType)
 
         let found = model.find(function(element) {
             return element.key === keyModel;
@@ -22,15 +24,14 @@ export default function CreateNewModel(props) {
         }
     }
 
-    function cancelAdd(e, indexEl){
+    function cancelAdd(e, keyEl){
         e.preventDefault()
         
         let newArr = model
         newArr = newArr.filter( el => {
-            return el.key !== indexEl
+            return el.key !== keyEl
         })
         setModel(newArr)
-
     }
 
     return (
@@ -38,23 +39,34 @@ export default function CreateNewModel(props) {
            <div style={{ padding:'30px' }}>
             <h3> <span style={{ color:'grey' }}>#</span> Add Model </h3>
             { model.length !== 0 && <div className='border shadow-sm mt-3' style={{ borderRadius:'5px', padding:'15px 20px' }}>
-                { model.map( (el, index) => {
-                    return <Row style={{ paddingTop:'15px' }} key={ index }>
-                        <Col lg={5}>
-                            <h4> { el.key } </h4>
-                        </Col>
-                        <Col lg={3}>
-                            <h4> { el.datatype } </h4>
-                        </Col>
-                        <Col lg={4}>
-                            <Row>
-                                <Col>
-                                    <Button block className='shadow-sm' variant="outline-secondary" onClick={ (e) => cancelAdd(e, el.key) }> Cancel </Button>
-                                </Col>
-                            </Row>
+
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Key Name</th>
+                            <th>Data Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { model.map((el, index)=> {
+                            return <tr key={ index }>
+                                <td>{ index+1 }</td>
+                                <td>{ el.key}</td>
+                                <td>{ el.datatype }</td>
+                                <td><Button variant='danger' block onClick={ (e) => cancelAdd(e, el.key) }> cancel add </Button></td>
+                            </tr>
+                        })}
+                    </tbody>
+                </Table>
+                <div className='mt-3'>
+                    <Row>
+                        <Col className='d-flex justify-content-end'>
+                            <Button className='shadow-sm'> Submit New Model </Button>
                         </Col>
                     </Row>
-                }) }
+                </div>
                 </div>    
             }
             <div className='border shadow-sm mt-3' style={{ borderRadius:'5px', padding:'15px 20px' }}>
@@ -79,13 +91,6 @@ export default function CreateNewModel(props) {
                         </Col>
                     </Row>
                 </Form>
-            </div>
-            <div className='mt-3'>
-                 <Row>
-                    <Col className='d-flex justify-content-end'>
-                        <Button className='shadow-sm'> Submit New Model </Button>
-                    </Col>
-                </Row>
             </div>
         </div>
         </>

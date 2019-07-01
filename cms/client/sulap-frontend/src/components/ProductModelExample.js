@@ -6,9 +6,9 @@ function NewModel(props) {
 
     const [ showModal, setShowModal ] = useState(false)
     const [ rowTable, setRowTable ] = useState([])
-    const headerTable = ['Name', 'Price', 'Description'] // dari argv model create
+    const headerTable = ['Name', 'Price', 'Description'] 
 
-    // ini menyesuaikan
+    
     const [ name, setName ] = useState(null)
     const [ price, setPrice ] = useState(null)
     const [ description, setDescription ] = useState(null)
@@ -34,6 +34,12 @@ function NewModel(props) {
         setShowModal(true);
     }
 
+    function submitSearch(e) {
+        e.preventDefault()
+
+        console.log('hahahha')
+    }
+
     return (
         <>
             <Container fluid>
@@ -43,17 +49,32 @@ function NewModel(props) {
                             <h3> <span style={{ color:'grey' }}>#</span> Product </h3>
                         </Col>
                         <Col className='d-flex justify-content-end'>
-                            <Button variant='outline-primary' onClick={ handleShow }> Add New Product </Button>
+                            <Button variant='outline-primary' onClick={ handleShow }> <i className="fas fa-plus"></i> Add New </Button>
                         </Col>
                     </Row>
+                    
+                    <Form className='ml-3'>
+                        <Row className='mt-3'>
+                            <Col lg={3} style={{ padding:0 }}>
+                                <Form.Group className='shadow-sm'>
+                                    <Form.Control type="text" placeholder="Search..." />
+                                </Form.Group>
+                            </Col>
+                            <Col lg={1}>
+                                <Form.Group>
+                                    <Button onClick={ submitSearch } className='shadow-sm'> <i className="fas fa-search"></i> </Button>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                    </Form>
                
-                    <div className='shadow-sm mt-3'>
+                    <div className='shadow-sm mt-2'>
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    { headerTable.map( el =>{
-                                        return <th> {el} </th>
+                                    { headerTable.map((el, index) =>{
+                                        return <th key={ index }> {el} </th>
                                     })}
                                 </tr>
                             </thead>
@@ -73,9 +94,8 @@ function NewModel(props) {
                     <Modal.Title>Add //model-name </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>{ name}{price}{description }</p>
                     { headerTable.map( (el, index) => {
-                        return  <Form.Group>
+                        return  <Form.Group key={ index }>
                             <Form.Control type="text" placeholder={`Enter ${ el }`} onChange={ e => funcLoop[index]( e.target.value)}/>
                         </Form.Group>
                     }) }

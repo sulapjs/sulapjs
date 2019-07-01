@@ -11,7 +11,7 @@ function ModelDetail(props) {
             <div className='border shadow-sm mt-3' style={{ borderRadius:'5px', padding:'15px 20px' }}>
                 <Row style={{ padding:'0px 5px' }}>
                     <Col>
-                        <h5> <b>{ modelInfo.length } fields</b> </h5>
+                        <h5> <b>{ Object.keys(modelInfo).length } fields</b> </h5>
                     </Col>
                 </Row>
             

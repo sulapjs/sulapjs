@@ -44,12 +44,12 @@
 }
 
 a{
-  text-decoration: 'none';
-  text-decoration-color: 'none';
+  text-decoration: none !important;
+  color: inherit !important;
 }
 
 a:hover{
-  text-decoration: 'none';
-  text-decoration-color: 'none';
+  text-decoration: none !important;
+  color: inherit !important;
 }
 

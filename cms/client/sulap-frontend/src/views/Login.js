@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from '../api/database'
-import { Container, Button, Form, Row, Col } from 'react-bootstrap';
+import { Container, Button, Form, Row, Col} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Toast from '../components/ToastComponent';
 
 const styles= {
     headerForm : {
@@ -19,23 +20,28 @@ export default function Login(props) {
 
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
+    const [ text, setText ] = useState('')
+    const [ status, setStatus ] = useState(false)
 
     function submitLogin(e){
         e.preventDefault()
         
         axios.post('/login', { email, password })
         .then(({ data }) => {
-            localStorage.setItem('name', data.name)
             localStorage.setItem('token', data.token)
             props.history.push('/dashboard')
+            setText('Login Success')
+            setStatus(true)
         })
         .catch(err => {
-            console.log(err.response.data.message)
+            setStatus(false)
+            setText(err.response.data.message)
         })
     }
 
     return (
         <>
+        <Toast text={text} status={ status }/>
         <Container style={{ marginTop:'5%' }}>
             <Row className='justify-content-center'>
                 <Col lg={6}>

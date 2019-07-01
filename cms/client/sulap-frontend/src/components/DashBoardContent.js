@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import CreateNewModel from './CreateNewModel';
 import ProductModul from './ProductModelExample';
 import ProductModelDetail from './ModelDetail';
+//new-component
 
 function DashBoardContent(props) {
 
@@ -26,7 +27,7 @@ function DashBoardContent(props) {
                 <ProductModelDetail />
             </>
         )
-     }
+     } //add-new-route
      else {
          return null
      }

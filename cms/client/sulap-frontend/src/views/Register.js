@@ -1,7 +1,8 @@
 import React,{ useState } from 'react'
-import { Container, Button, Form, Row, Col, Alert } from 'react-bootstrap';
+import { Container, Button, Form, Row, Col } from 'react-bootstrap';
 import axios from '../api/database'
 import { Link } from 'react-router-dom';
+import Toast from '../components/ToastComponent';
 
 const styles= {
     headerForm : {
@@ -21,26 +22,37 @@ export default function Register(props) {
     const [ password, setPassword ] = useState('')
     const [ confirmPassword, setConfirmPassword ] = useState('')
     const [ name, setName ] = useState('')
-    const [ cekPass, setCekPass ] = useState(false)
+    const [ text, setText ] = useState('')
+    const [ status, setStatus ] = useState(false)
 
     function submitRegister(e) {
         e.preventDefault()
         if(password !== confirmPassword){
-            setCekPass(true)
+            setText(`Password didn't match !!!`)
+            setStatus(false)
         } else {
-            setCekPass(false)
             axios.post('/register', { email, password, name })
-            .then(data => {
-                console.log('hehehehe')
+            .then(() => {
+                setText(`Register Success, let's login !!!`)
+                setStatus(true)
+                setEmail('')
+                setConfirmPassword('')
+                setPassword('')
+                setName('')
+                setTimeout(function(){
+                    props.history.push('/login')
+                }, 1500)
             })
             .catch(err =>{
-                console.log(err.message)
+                setText(err.response.data.message)
+                setStatus(false)
             })
         }
     }
 
     return (
         <>
+        <Toast status={ status } text={text}/>
         <Container style={{ marginTop:'5%' }}>
             <Row className='justify-content-center'>
                 <Col lg={6}>
@@ -94,10 +106,6 @@ export default function Register(props) {
                     </div>
                 </Col>
             </Row>
-
-            { cekPass ?
-                <Alert variant="danger">  Password didn't match !!! </Alert> : null
-            }
         </Container>
         </>
     )

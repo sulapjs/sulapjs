@@ -8,7 +8,7 @@ function NavbarHeader(props) {
             <Container fluid>
                 <Row className='shadow-sm'>
                     <Col lg={2} style={{ textAlign:'center', background:'#00b894' }} className='d-flex align-items-center justify-content-center'>
-                        <div class="LogoDashboard"> <Link to="/dashboard"><h4 style={{  color:'white', verticalAlign:'center', fontWeight:'200', letterSpacing:'2px'}}><b>SULAP</b>-JS</h4> </Link></div>
+                        <div className="LogoDashboard"> <Link to="/dashboard"><h4 style={{  color:'white', verticalAlign:'center', fontWeight:'200', letterSpacing:'2px'}}><b>SULAP</b>-JS</h4> </Link></div>
                     </Col>
                     <Col lg={10}>
                         <Navbar>
