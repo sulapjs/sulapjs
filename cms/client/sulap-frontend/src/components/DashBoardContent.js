@@ -1,10 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom';
 import CreateNewModel from './CreateNewModel';
-import ProductModul from './ProductModelExample';
-import ProductModelDetail from './ModelDetail';
-//new-component
-
 //new-component
 
 function DashBoardContent(props) {
@@ -17,19 +13,7 @@ function DashBoardContent(props) {
                 <CreateNewModel />
             </>
         )
-     } else if(linkPath === 'product') {
-        return (
-            <>
-                <ProductModul />
-            </>
-        )
-     } else if(linkPath === 'product-detail') {
-        return (
-            <>
-                <ProductModelDetail />
-            </>
-        )
-     } //add-new-route
+     }  //add-new-route
      else {
          return null
      }
