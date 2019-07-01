@@ -20,8 +20,10 @@ export default function Login(props) {
 
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
+
     const [ text, setText ] = useState('')
     const [ status, setStatus ] = useState(false)
+    const [ showToast, setShowToast ] = useState(false) 
 
     function submitLogin(e){
         e.preventDefault()
@@ -29,19 +31,23 @@ export default function Login(props) {
         axios.post('/login', { email, password })
         .then(({ data }) => {
             localStorage.setItem('token', data.token)
-            props.history.push('/dashboard')
             setText('Login Success')
             setStatus(true)
+            setShowToast(true)
+            setTimeout(function(){
+                props.history.push('/dashboard')
+            }, 1500)
         })
         .catch(err => {
-            setStatus(false)
             setText(err.response.data.message)
+            setStatus(false)
+            setShowToast(true)
         })
     }
 
     return (
         <>
-        <Toast text={text} status={ status }/>
+        <Toast text={text} status={ status } show={ showToast} set={ setShowToast }/>
         <Container style={{ marginTop:'5%' }}>
             <Row className='justify-content-center'>
                 <Col lg={6}>

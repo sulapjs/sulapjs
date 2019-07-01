@@ -4,16 +4,21 @@ import { Toast } from 'react-bootstrap';
 function ToastComponent(props) {
 
     useEffect(() => {
-        if(props.text){
+        if(props.show){
             setShow(true)
         }
-    }, [props])
+    }, [props.show])
+
+    function hideShow(){
+        setShow(false)
+        props.set(false)
+    }
 
     const [ show, setShow ] = useState(false)
 
     return (
         <>
-          <Toast show={show} delay={2000} autohide 
+          <Toast show={show} delay={3000} autohide onClose={ hideShow }
             style={{ 
                 position:'absolute', 
                 right:30, bottom: 30,

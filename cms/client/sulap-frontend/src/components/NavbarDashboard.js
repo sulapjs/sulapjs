@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Button, Row, Col, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import axios from '../api/database'
 
 function NavbarHeader(props) {
+
+    const [ decode, setDecode ] = useState(null)
+
+    useEffect(() => {
+        axios.get('/user/decode', { headers: { token:localStorage.getItem('token')}})
+        .then(({data}) => {
+            setDecode(data.decoded)
+        })
+        .catch(err=> {
+            console.log(err)
+        })
+    }, [])
+
     return (
         <>
             <Container fluid>
@@ -13,7 +27,7 @@ function NavbarHeader(props) {
                     <Col lg={10}>
                         <Navbar>
                             <Nav className='d-flex align-items-center'>
-                                <h5> <b> Helloo, </b> { localStorage.getItem('name') } </h5>
+                                <h5> <b> Helloo, </b> { decode ? decode.name : null } </h5>
                             </Nav>
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">
