@@ -6,12 +6,12 @@ export default function RowTableNewModel(props) {
 
     return (
         <>
-          <tr>
-                <td>{ index+1 }</td>
-                <td>{ value.name }</td>
-                <td>{ value.price }</td>
-                <td>{ value.description }</td>
-            </tr>  
+        <tr>
+            <td>{ index+1 }</td>
+            { Object.keys(value).map( (el, elIndex) => {
+                return <td key={ elIndex }>{ value[el] }</td>
+            })}
+        </tr>  
         </>
     )
 }

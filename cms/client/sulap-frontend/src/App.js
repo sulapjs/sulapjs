@@ -4,7 +4,7 @@ import Login from './views/Login';
 import Register from './views/Register';
 import Dashboard from './views/Dashboard';
 import Home from './views/Home';
-import { Link, Route, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 function App() {
   return (
