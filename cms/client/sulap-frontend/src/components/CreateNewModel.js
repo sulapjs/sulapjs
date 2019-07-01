@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Form, Button, Table } from 'react-bootstrap';
+import Toast from '../components/ToastComponent'
+import { stat } from 'fs';
 
 export default function CreateNewModel(props) {
     
@@ -7,10 +9,12 @@ export default function CreateNewModel(props) {
     const [ keyModel, setKeyModel ] = useState('')
     const [ dataType, setDataType ] = useState('Text')
 
+    const [ text, setText ] = useState('')
+    const [ status, setStatus ] = useState(false)
+    const [ showToast, setShowToast ] = useState(false) 
+
     function addMore(e){
         e.preventDefault()
-
-        console.log(keyModel, dataType)
 
         let found = model.find(function(element) {
             return element.key === keyModel;
@@ -20,7 +24,14 @@ export default function CreateNewModel(props) {
             let modelObj = { key : keyModel, datatype : dataType }
             setModel([...model, modelObj])
             setKeyModel('')
-            setDataType('Text')
+            setDataType(dataType)
+            setText('add success')
+            setShowToast(true)
+            setStatus(true)
+        } else {
+            setText('already added')
+            setShowToast(true)
+            setStatus(false)
         }
     }
 
@@ -36,6 +47,7 @@ export default function CreateNewModel(props) {
 
     return (
         <>  
+            <Toast show={ showToast } text={text} status={ status } set={ setShowToast }/>
            <div style={{ padding:'30px' }}>
             <h3> <span style={{ color:'grey' }}>#</span> Add Model </h3>
             { model.length !== 0 && <div className='border shadow-sm mt-3' style={{ borderRadius:'5px', padding:'15px 20px' }}>
@@ -63,7 +75,7 @@ export default function CreateNewModel(props) {
                 <div className='mt-3'>
                     <Row>
                         <Col className='d-flex justify-content-end'>
-                            <Button className='shadow-sm'> Submit New Model </Button>
+                            <Button className='shadow-sm' block> <i className="fas fa-plus"></i> Submit New Model </Button>
                         </Col>
                     </Row>
                 </div>
@@ -83,6 +95,7 @@ export default function CreateNewModel(props) {
                                     <option>Text</option>
                                     <option>Text Area</option>
                                     <option>Number</option>
+                                    <option>Image</option>
                                 </Form.Control>
                             </Form.Group>
                         </Col>

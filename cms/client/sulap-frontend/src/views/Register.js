@@ -24,6 +24,7 @@ export default function Register(props) {
     const [ name, setName ] = useState('')
     const [ text, setText ] = useState('')
     const [ status, setStatus ] = useState(false)
+    const [ showToast, setShowToast ] = useState(false) 
 
     function submitRegister(e) {
         e.preventDefault()
@@ -39,6 +40,7 @@ export default function Register(props) {
                 setConfirmPassword('')
                 setPassword('')
                 setName('')
+                setShowToast(true)
                 setTimeout(function(){
                     props.history.push('/login')
                 }, 1500)
@@ -46,13 +48,14 @@ export default function Register(props) {
             .catch(err =>{
                 setText(err.response.data.message)
                 setStatus(false)
+                setShowToast(true)
             })
         }
     }
 
     return (
         <>
-        <Toast status={ status } text={text}/>
+        <Toast status={ status } text={text} show={ showToast } set={ setShowToast }/>
         <Container style={{ marginTop:'5%' }}>
             <Row className='justify-content-center'>
                 <Col lg={6}>
