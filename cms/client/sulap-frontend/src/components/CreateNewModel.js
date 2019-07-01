@@ -92,9 +92,9 @@ export default function CreateNewModel(props) {
                         <Col>
                             <Form.Group>
                                 <Form.Control as="select"  value={ dataType } onChange={ (e) => setDataType(e.target.value) }>
-                                    <option>Text</option>
-                                    <option>Text Area</option>
-                                    <option>Number</option>
+                                    <option>String</option>
+                                    <option>Boolean</option>
+                                    <option>Float</option>
                                     <option>Image</option>
                                 </Form.Control>
                             </Form.Group>
