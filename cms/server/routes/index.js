@@ -2,7 +2,7 @@ const router = require('express').Router()
 const exampleRouter = require('./example')
 const userRouter = require('./user')
 const AuthController = require('../controllers/auth')
-//sulap-add-route source
+//sulap-route-source
 //add 
 //`const ${modelname}Router = require('./${modelname})`
 
@@ -11,8 +11,6 @@ router.post('/login', AuthController.login);
 router.use('/user', userRouter)
 router.use('/EXAMPLEs', exampleRouter);
 //sulap-add-route
-//add 
-//`router.use('/${modelname}', ${modelname}Router)`
 /* please do not delete comment above  */
 
 const err = {
