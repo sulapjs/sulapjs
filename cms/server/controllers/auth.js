@@ -4,8 +4,9 @@ const { decrypt } = require('../helpers/bcrypt');
 
 class AuthController {
   static register(req, res, next) {
+    const { name, email, password } = req.body;
     User
-      .create(req.body)
+      .create({ name, email, password })
       .then(newUser => {
         res
           .status(201)
@@ -15,77 +16,48 @@ class AuthController {
           });
       })
       .catch(err => {
-        if (err.message === 'Email has been taken') {
-          res
-            .status(409)
-            .json({
-              message: err.message
-            });
-        } else if (RegExp('validation').test(err.message)) {
-          if (err.errors.email) {
-            res
-              .status(400)
-              .json({
-                message: err.errors.email.message
-              });
-          } else {
-            res
-              .status(403)
-              .json({
-                message: err.message
-              });
-          }
-        } else {
-          res
-            .status(500)
-            .json({
-              message: err.message
-            });
-        }
+        next(err);
       });
   }
 
   static login(req, res, next) {
+    const { email, password } = req.body;
     User
       .findOne({
-        email: req.body.email
+        email
       })
       .then(foundUser => {
         if (!foundUser) {
-          res
-            .status(400)
-            .json({
-              message: 'User not found'
-            });
+          const err = {
+            status: 400,
+            message: 'Email / password incorrect'
+          }
+          next(err);
         } else {
-          if (decrypt(req.body.password, foundUser.password)) {
+          if (decrypt(password, foundUser.password)) {
             const token = sign({
               _id: foundUser._id, 
               name: foundUser.name,
               email: foundUser.email
-            }, foundUser.role);
+            });
 
             res
               .status(200)
               .json({
                 message: 'Login success',
-                token: token
+                token
               });
           } else {
-            res
-              .status(400)
-              .json({
-                message: 'Wrong password'
-              });
+            const err = {
+              status: 400,
+              message: 'Email / password incorrect'
+            }
+            next(err);
           }
         }
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({
-            message: err.message
-          });
+        next(err);
       });
   }
 }

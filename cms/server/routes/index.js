@@ -6,10 +6,24 @@ router.post('/register', AuthController.register);
 router.post('/login', AuthController.login);
 router.use('/EXAMPLEs', exampleRouter);
 
-router.get('/*', (req,res) => {
-    res.status(404).json({
-        message: 'not found 404'
-    })
+const err = {
+    status: 404,
+    message: 'not found 404'
+}
+router.get('/*', (req, res, next) => {
+    next(err);
+})
+router.post('/*', (req, res, next) => {
+    next(err);
+})
+router.put('/*', (req, res, next) => {
+    next(err);
+})
+router.patch('/*', (req, res, next) => {
+    next(err);
+})
+router.delete('/*', (req, res, next) => {
+    next(err);
 })
 
 module.exports = router

@@ -13,7 +13,7 @@ const UserSchema = new Schema({
         validate: [
             {
                 validator: v => /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(v),
-                messsage: 'Email is not valid email address'
+                message: 'Email is not valid email address'
             },
             {
                 validator: function (v) {
@@ -33,10 +33,10 @@ const UserSchema = new Schema({
                             }
                         })
                         .catch(err => {
-                            return err.messsage
+                            throw err
                         })
                 },
-                messsage: 'Email has been taken'
+                message: 'Email has been taken'
             }
         ]
     },
