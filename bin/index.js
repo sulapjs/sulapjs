@@ -29,11 +29,13 @@ yargs.command({
     builder: {
         model: {
             type: 'string',
-            demandOption: true
+            demandOption: true,
+            alias: 'm'
         },
         attributes: {
             type: 'string',
-            demandOption: true
+            demandOption: true,
+            alias: 'a'
         }
     },
     handler: argv => bikinin(argv)
