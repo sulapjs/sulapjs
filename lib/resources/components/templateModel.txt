@@ -1,25 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Row, Col, Modal, Form } from 'react-bootstrap'
 import RowTable from './RowTableNewModel';
+import axios from '../api/database';
+import Toast from './ToastComponent'
 
 function //model-name (props) {
 
     const [ showModal, setShowModal ] = useState(false)
     const [ rowTable, setRowTable ] = useState([])
     //header-table
-
+     const [ search, setSearch ] = useState('')
     //state
     
     //function-loop
     //state-object
 
-    function submitForm(e){
+    //toast
+    const [ text, setText ] = useState('')
+    const [ status, setStatus ] = useState(false)
+    const [ showToast, setShowToast ] = useState(false) 
+
+   function submitForm(e){
         e.preventDefault()
+
+        axios.post('///model-lower-cases', stateObj, { headers: { token:localStorage.getItem('token')}})
+        .then(({data}) => {
+            setRowTable([...rowTable, data.new//model-name])
+            setText('success add')
+            setStatus(true)
+            setShowToast(true)
+        })
+        .catch(err => {
+            setText(err.response.data.message)
+            setStatus(false)
+            setShowToast(true)
+        })
+
         let tempRow = [ ...rowTable, stateObj ]
         setRowTable(tempRow)
-        funcLoop.map( func => {
+        funcLoop.map( func => (
             func(null)
-        })
+        ))
         handleClose()
     }
 
@@ -31,14 +52,23 @@ function //model-name (props) {
         setShowModal(true);
     }
 
-    function submitSearch(e) {
-        e.preventDefault()
-
-        console.log('hahahha')
-    }
+    useEffect(() => {
+        axios.get('///model-lower-cases', { headers: { token: localStorage.getItem('token')}})
+        .then(({data}) => {
+            if(data.//model-names){
+                setRowTable(data.//model-names)
+            }
+        })
+        .catch(err =>{
+            setText(err.response.data.message)
+            setStatus(false)
+            setShowToast(true)
+        })
+    }, [])
 
     return (
         <>
+            <Toast text={text} status={ status } show={ showToast} set={ setShowToast }/>
             <Container fluid>
                 <div style={{ padding:'30px' }}>
                     <Row>
@@ -59,7 +89,7 @@ function //model-name (props) {
                             </Col>
                             <Col lg={1}>
                                 <Form.Group>
-                                    <Button onClick={ submitSearch } className='shadow-sm'><i className="fas fa-search"></i></Button>
+                                    <Button /*onClick={ submitSearch }*/ className='shadow-sm'><i className="fas fa-search"></i></Button>
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -70,14 +100,14 @@ function //model-name (props) {
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    { headerTable.map((el, index) =>{
+                                    { ['ID',...headerTable, 'UpdatedAt', 'CreatedAt'].map((el, index) =>{
                                         return <th key={ index }> {el} </th>
                                     })}
                                 </tr>
                             </thead>
                             <tbody>
                                 { rowTable.map( (row, index) => {
-                                    return <RowTable value={ row } index={index} key={ index }/>
+                                    return <RowTable value={ row } index={index} key={ index } key_model={ headerTable }/>
                                 }) }
                             </tbody>
                         </Table>
