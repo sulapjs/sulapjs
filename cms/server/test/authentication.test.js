@@ -14,7 +14,7 @@ after(function(done) {
   clearUser(done);
 })
 
-describe('AUTHENTICATION', function() {
+describe.only('AUTHENTICATION', function() {
   describe('POST /register', function() {
     describe('SUCCESS', function() {
       it('should response an object (message and newUser) with status 201', function(done) {
@@ -128,9 +128,6 @@ describe('AUTHENTICATION', function() {
       })
     })
     describe('ERROR', function() {
-      afterEach(function(done) {
-        clearUser(done);
-      })
       it('should response an object (message) with status 400', function(done) {
         const login = {
           email: 'user@mail.com',
@@ -153,7 +150,7 @@ describe('AUTHENTICATION', function() {
     })
   })
 
-  describe('GET /decode', function() {
+  describe('GET /user/decode', function() {
     let token = null;
     let tokenNotAllowed = jwtGen.sign({
       name: 'New User',
@@ -182,10 +179,10 @@ describe('AUTHENTICATION', function() {
       it('should response an object (message and decoded) with status 200', function(done) {
         chai
           .request(app)
-          .get('/decode')
+          .get('/user/decode')
           .set({ token })
           .then(res => {
-            expect(res).to.have.status(201);
+            expect(res).to.have.status(200);
             expect(res.body).to.be.an('object');
             expect(res.body).to.have.property('message');
             expect(res.body).to.have.property('decoded');
@@ -203,7 +200,7 @@ describe('AUTHENTICATION', function() {
       it('should response an object (message: no token assigned) with status 400', function(done) {
         chai
           .request(app)
-          .get('/decode')
+          .get('/user/decode')
           .then(res => {
             expect(res).to.have.status(400);
             expect(res.body).to.be.an('object');
@@ -217,7 +214,7 @@ describe('AUTHENTICATION', function() {
       it('should response an object (message: not allowed to access) with status 400. Note: wrong secret jwt', function(done) {
         chai
           .request(app)
-          .get('/decode')
+          .get('/user/decode')
           .set({ token: tokenNotAllowed })
           .then(res => {
             expect(res).to.have.status(400);
@@ -232,7 +229,7 @@ describe('AUTHENTICATION', function() {
       it('should response an object (message: not recognized input data) with status 400. Note: not registered in database', function(done) {
         chai
           .request(app)
-          .get('/decode')
+          .get('/user/decode')
           .set({ token: tokenNotRecognized })
           .then(res => {
             expect(res).to.have.status(400);
