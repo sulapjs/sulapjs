@@ -14,7 +14,8 @@ const exampleSchema = new Schema({
     description: {
         type: String,
     },
-    //*regex_models*//
+    //sulap-add-models
+    //please do not delete comment above
     created: {
         type: Date,
     },
