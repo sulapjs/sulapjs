@@ -1,5 +1,6 @@
 module.exports = (err, req, res, next) => {
   const { error, status, message, name } = err;
+  console.log(err, '---err handler')
   if (error) {
     console.log({ message: 'ERROR AT TRY CATCH', error });
   }

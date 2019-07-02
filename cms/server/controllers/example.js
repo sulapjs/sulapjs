@@ -1,6 +1,6 @@
 const Example = require('../models/EXAMPLE')
 class ExampleController {
-    static create(req,res) {
+    static create(req,res, next) {
         let createObj = {}
         
         const keys = Object.keys(req.body)
@@ -22,28 +22,31 @@ class ExampleController {
             })
         })
         .catch(err => {
-            if(err.errors.name) {
-                res.status(400).json({
-                    message: err.message,
-                })
-            } else {
-                res.status(500).json({
-                    message: err.message,
-                    error: 'error createNewExample'
-                })
-            }
+            next(err)
+            // if(err.errors.name) {
+            //     res.status(400).json({
+            //         message: err.message,
+            //     })
+            // } else {
+            //     res.status(500).json({
+            //         message: err.message,
+            //         error: 'error createNewExample'
+            //     })
+            // }
         })
     }
 
-    static findOne(req,res) {
+    static findOne(req,res, next) {
         const { id } = req.params
 
         Example.findOne({_id: id})
         .then(exampleFindOne => {
             if(!exampleFindOne) {
-                res.status(404).json({
-                    message: 'fineOneExample not found'
-                })
+                const err = {
+                    message: 'fineOneExample not found',
+                    status: 404,
+                }
+                next(err)
             } else {
                 res.status(200).json({
                     EXAMPLE: exampleFindOne,
@@ -52,17 +55,26 @@ class ExampleController {
             }
         })
         .catch(err => {
-            res.status(500).json({
-                message: err.message,
-                error: 'error findOneExample'
-            })
+            next(err)
+            // res.status(500).json({
+            //     message: err.message,
+            //     error: 'error findOneExample'
+            // })
         })
     }
 
-    static findAll(req,res) {
+    static findAll(req,res, next) {
         //add query above, alter below as needed
+        let query;
+        if(req.query.search) {
+            
+            let query = {$or:[
+                //sulap-add-query
 
-        Example.find({})
+            ]}
+        }
+
+        Example.find(query)
         .then(exampleFindAll => {
             if(exampleFindAll.length === 0) {
                 res.status(404).json({
@@ -76,14 +88,15 @@ class ExampleController {
             }
         })
         .catch(err => {
-            res.status(500).json({
-                message: err.message,
-                error: 'error findAll example'
-            })
+            next(err)
+            // res.status(500).json({
+            //     message: err.message,
+            //     error: 'error findAll example'
+            // })
         })
     }
 
-    static updateOnePatch(req,res) {
+    static updateOnePatch(req,res, next) {
         const { id } = req.params
         let updateObj = {}
         const keys = Object.keys(req.body)
@@ -103,14 +116,15 @@ class ExampleController {
             })
         })
         .catch(err => {
-            res.status(500).json({
-                message: err.message,
-                error: 'error findOneAndUpdateOne example'
-            })
+            next(err)
+            // res.status(500).json({
+            //     message: err.message,
+            //     error: 'error findOneAndUpdateOne example'
+            // })
         })
     }
 
-    static updateOnePut(req,res) {
+    static updateOnePut(req,res, next) {
         const { id } = req.params
         let updateObj = {}
         const keys = Object.keys(req.body)
@@ -122,22 +136,21 @@ class ExampleController {
 
         Example.findOneAndUpdate({_id: id}, updateObj, { new:true })
         .then(exampleUpdated => {
-            console.log(exampleUpdated, '---- example updated')
             res.status(201).json({
                 updatedEXAMPLE:exampleUpdated,
                 message: 'findOneAndUpdateExample success'
             })
         })
         .catch(err => {
-            console.log(err, '----error')
-            res.status(500).json({
-                message: err.message,
-                error: 'error findOneAndUpdateOne example'
-            })
+            next(err)
+            // res.status(500).json({
+            //     message: err.message,
+            //     error: 'error findOneAndUpdateOne example'
+            // })
         })
     }
 
-    static deleteOne(req,res) {
+    static deleteOne(req,res, next) {
         const { id } = req.params
         
         Example.findOneAndDelete({ _id: id })
@@ -148,10 +161,11 @@ class ExampleController {
             })
         })
         .catch(err => {
-            res.status(500).json({
-                message: err.message,
-                error: 'error findOneAndDelete example'
-            })
+            next(err)
+            // res.status(500).json({
+            //     message: err.message,
+            //     error: 'error findOneAndDelete example'
+            // })
         })
     }
 
