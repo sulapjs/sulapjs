@@ -1,58 +1,124 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Table, Button, Row, Col, Modal, Form } from 'react-bootstrap'
+import { Container, Table, Button, Row, Col, Modal, Form, Spinner } from 'react-bootstrap'
 import RowTable from './RowTableNewModel';
 import axios from '../api/database';
-import Toast from './ToastComponent'
+import Toast from './ToastComponent';
 
 function //model-name (props) {
 
     const [ showModal, setShowModal ] = useState(false)
     const [ rowTable, setRowTable ] = useState([])
     //header-table
-     const [ search, setSearch ] = useState('')
+
+    const [ search, setSearch ] = useState('')
     //state
     
+    const [ id , setId ] = useState('')
+    const [ loading, setLoading ] = useState(false)
+
     //function-loop
     //state-object
 
     //toast
-    const [ text, setText ] = useState('')
-    const [ status, setStatus ] = useState(false)
+    const [ textToast, setTextToast ] = useState('')
+    const [ statusToast, setStatusToast ] = useState(false)
     const [ showToast, setShowToast ] = useState(false) 
 
    function submitForm(e){
         e.preventDefault()
-
-        axios.post('///model-lower-cases', stateObj, { headers: { token:localStorage.getItem('token')}})
-        .then(({data}) => {
-            setRowTable([...rowTable, data.new//model-name])
-            setText('success add')
-            setStatus(true)
-            setShowToast(true)
-        })
-        .catch(err => {
-            setText(err.response.data.message)
-            setStatus(false)
-            setShowToast(true)
-        })
-
-        let tempRow = [ ...rowTable, stateObj ]
-        setRowTable(tempRow)
-        funcLoop.map( func => (
-            func(null)
-        ))
+       
+        if(id){
+            axios.patch(`///model-lower-cases/${id}`, stateObj  ,{ headers:{ token:localStorage.getItem('token')}})
+            .then(({data}) => {
+                let tempTable = rowTable.map((el,index) => {
+                    if(el._id == data.updated//model-name._id){
+                        el = data.updated//model-name
+                    }
+                    return el;
+                })
+                setRowTable(tempTable)
+            })
+            .catch(err =>{
+                setTextToast(err.response.data.message)
+                setStatusToast(false)
+                setShowToast(true)
+            })
+        } else {
+            axios.post('///model-lower-cases', stateObj, { headers: { token:localStorage.getItem('token')}})
+            .then(({data}) => {
+                setRowTable([...rowTable, data.new//model-name])
+                setTextToast('success add')
+                setStatusToast(true)
+                setShowToast(true)
+            })
+            .catch(err => {
+                setTextToast(err.response.data.message)
+                setStatusToast(false)
+                setShowToast(true)
+            })
+    
+            let tempRow = [ ...rowTable, stateObj ]
+            setRowTable(tempRow)
+            funcLoop.map( func => (
+                func('')
+            ))
+        }
         handleClose()
+    }
+
+    function deleteData(id){
+        axios.delete(`///model-lower-cases/${id}`, { headers: { token:localStorage.getItem('token')}})
+            .then(({data}) => {
+                let tempTable = rowTable.filter((el,index) => {
+                    return el._id !== id
+                })
+                setRowTable(tempTable)
+                setTextToast('delete success')
+                setStatusToast(true)
+                setShowToast(true)
+            })
+            .catch(err => {
+                setTextToast(err.response.data.message)
+                setStatusToast(false)
+                setShowToast(true)
+            })
     }
 
     function handleClose() {
         setShowModal(false);
+        funcLoop.map( func => (
+            func('')
+        ))
+        setId('')
     }
     
+    function editData(rowData){
+        Object.keys(stateObj).map((el, index) => {
+            funcLoop[index](rowData[el])
+        })
+        setId(rowData._id)
+        handleShow()
+    }
+
     function handleShow() {
         setShowModal(true);
     }
+    
+    function submitSearch(e){
+        e.preventDefault()
+        axios.get(`///model-lower-cases?search=${search}`, { headers:{ token:localStorage.getItem('token')}})
+        .then(({ data }) =>{
+            setRowTable([...data.//model-names])
+        })
+        .catch(err => {
+            setTextToast(err.response.data.message)
+            setStatusToast(false)
+            setShowToast(true)
+        })
+    }
 
-    useEffect(() => {
+    function fetchData(){
+        setLoading(true)
         axios.get('///model-lower-cases', { headers: { token: localStorage.getItem('token')}})
         .then(({data}) => {
             if(data.//model-names){
@@ -60,60 +126,81 @@ function //model-name (props) {
             }
         })
         .catch(err =>{
-            setText(err.response.data.message)
-            setStatus(false)
+            setTextToast(err.response.data.message)
+            setStatusToast(false)
             setShowToast(true)
         })
+        .finally(() => {
+            setLoading(false)
+        })
+    }
+
+    useEffect(() => {
+        if(!search){
+            fetchData()
+        }
+    }, [search])
+
+    useEffect(() => {
+        fetchData()
     }, [])
 
     return (
         <>
-            <Toast text={text} status={ status } show={ showToast} set={ setShowToast }/>
-            <Container fluid>
-                <div style={{ padding:'30px' }}>
-                    <Row>
-                        <Col>
-                            <h3> <span style={{ color:'grey' }}>#</span> Product </h3>
-                        </Col>
-                        <Col className='d-flex justify-content-end'>
-                            <Button variant='outline-primary' onClick={ handleShow }> <i className="fas fa-plus"></i> Add New </Button>
-                        </Col>
-                    </Row>
-
-                    <Form className='ml-3'>
-                        <Row className='mt-3'>
-                            <Col lg={3} style={{ padding:0 }}>
-                                <Form.Group className='shadow-sm'>
-                                    <Form.Control type="text" placeholder="Search..." />
-                                </Form.Group>
+            <Toast text={textToast} status={ statusToast } show={ showToast} set={ setShowToast }/>
+            { loading ?
+                <div className='d-flex justify-content-center align-items-center'>
+                    <Spinner animation="border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </Spinner>
+                </div>
+                :    
+                <Container fluid>
+                    <div style={{ padding:'30px' }}>
+                        <Row>
+                            <Col>
+                                <h3> <span style={{ color:'grey' }}>#</span> //model-name </h3>
                             </Col>
-                            <Col lg={1}>
-                                <Form.Group>
-                                    <Button /*onClick={ submitSearch }*/ className='shadow-sm'><i className="fas fa-search"></i></Button>
-                                </Form.Group>
+                            <Col className='d-flex justify-content-end'>
+                                <Button variant='outline-primary' onClick={ handleShow }> <i className="fas fa-plus"></i> Add New </Button>
                             </Col>
                         </Row>
-                    </Form>
-               
-                    <div className='shadow-sm mt-3'>
-                        <Table striped bordered hover>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    { ['ID',...headerTable, 'UpdatedAt', 'CreatedAt'].map((el, index) =>{
-                                        return <th key={ index }> {el} </th>
-                                    })}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                { rowTable.map( (row, index) => {
-                                    return <RowTable value={ row } index={index} key={ index } key_model={ headerTable }/>
-                                }) }
-                            </tbody>
-                        </Table>
+
+                        <Form className='ml-3' onSubmit={ submitSearch }>
+                            <Row className='mt-3'>
+                                <Col lg={3} style={{ padding:0 }}>
+                                    <Form.Group className='shadow-sm'>
+                                        <Form.Control type="text" placeholder="Search..." onChange={(e) => setSearch(e.target.value)}/>
+                                    </Form.Group>
+                                </Col>
+                                <Col lg={1}>
+                                    <Form.Group>
+                                        <Button type='submit' className='shadow-sm'><i className="fas fa-search"></i></Button>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </Form>
+                
+                        <div className='shadow-sm mt-3'>
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        { ['ID',...headerTable, 'CreatedAt', 'UpdatedAt', 'Actions'].map((el, index) =>{
+                                            return <th key={ index }> {el} </th>
+                                        })}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    { rowTable.map( (row, index) => {
+                                        return <RowTable value={ row } index={index} key={ index } key_model={ headerTable } edit={ editData } delete={ deleteData }/>
+                                    }) }
+                                </tbody>
+                            </Table>
+                        </div>
                     </div>
-                </div>
-            </Container>
+                </Container>
+        }
 
         <Form >
             <Modal show={showModal} onHide={handleClose}>
@@ -121,9 +208,9 @@ function //model-name (props) {
                     <Modal.Title>Add //model-name </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    { headerTable.map((el, index) => {
+                    { Object.keys(stateObj).map((el, index) => {
                         return  <Form.Group key={ index }>
-                            <Form.Control type="text" placeholder={`Enter ${ el }`} onChange={ e => funcLoop[index]( e.target.value)}/>
+                            <Form.Control type="text" placeholder={`Enter ${ el }`} onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el] }/>
                         </Form.Group>
                     }) }
                 </Modal.Body>
