@@ -1,13 +1,13 @@
 import React from 'react';
 import { Row, Col, Table } from 'react-bootstrap';
 
-function ModelDetail(props) {
+function //model-nameDetail(props) {
     
     //model-info
 
     return (
         <div style={{ padding:'30px' }}>
-            <h3> <span style={{ color:'grey' }}>#</span> Model Product </h3>
+            <h3> <span style={{ color:'grey' }}>#</span> Model //model-name </h3>
             <div className='border shadow-sm mt-3' style={{ borderRadius:'5px', padding:'15px 20px' }}>
                 <Row style={{ padding:'0px 5px' }}>
                     <Col>
@@ -40,4 +40,4 @@ function ModelDetail(props) {
     );
 }
 
-export default ModelDetail
+export default //model-nameDetail

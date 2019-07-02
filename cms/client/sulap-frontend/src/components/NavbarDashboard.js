@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Button, Row, Col, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import axios from '../api/database'
 
 function NavbarHeader(props) {
@@ -17,6 +17,12 @@ function NavbarHeader(props) {
         })
     }, [])
 
+    function logout(e){
+        e.preventDefault()
+        localStorage.clear()
+        props.history.push('/')
+    }
+
     return (
         <>
             <Container fluid>
@@ -32,7 +38,7 @@ function NavbarHeader(props) {
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">
                                 <Nav className="ml-auto">
-                                    <Link to='/'> <Button variant="light" className='mr-2'>LOGOUT</Button> </Link>
+                                    <Button variant="light" className='mr-2' onClick={ logout }>LOGOUT</Button>
                                 </Nav>
                             </Navbar.Collapse>
                         </Navbar>
@@ -42,4 +48,4 @@ function NavbarHeader(props) {
         </>
     );
 }
-export default NavbarHeader
+export default  withRouter(NavbarHeader)
