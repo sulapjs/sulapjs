@@ -6,7 +6,6 @@ module.exports = (req, res, next) => {
     try {
       const { token } = req.headers;
       const decoded = jwt.decode(token);
-      // console.log(decoded, '---decoded')
       User.findOne({
         email: decoded.email
       })
