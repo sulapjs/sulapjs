@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const exampleRouter = require('./example')
 const userRouter = require('./user')
 const AuthController = require('../controllers/auth')
 //sulap-route-source
@@ -9,7 +8,6 @@ const AuthController = require('../controllers/auth')
 router.post('/register', AuthController.register);
 router.post('/login', AuthController.login);
 router.use('/user', userRouter)
-router.use('/EXAMPLEs', exampleRouter);
 //sulap-add-route
 /* please do not delete comment above  */
 
