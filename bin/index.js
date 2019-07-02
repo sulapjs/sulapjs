@@ -7,6 +7,7 @@ const figlet = require('figlet')
 //commands
 const jreng = require('../lib/commands/jreng')
 const bikinin = require('../lib/commands/bikinin')
+const komang = require('../lib/commands/executor')
 
 require('yargonaut')
     .style('blue')
@@ -64,6 +65,12 @@ yargs.command({
             // console.log(chalk.green(data));
         })
     }
+})
+
+yargs.command({
+    command: 'komang',
+    describe: 'MAGIC IS HERE',
+    handler: (argv) => komang(argv)
 })
 
 yargs.argv
