@@ -8,8 +8,7 @@ function //model-name (props) {
 
     const [ showModal, setShowModal ] = useState(false)
     const [ rowTable, setRowTable ] = useState([])
-    //header-table
-
+    //state-name
     const [ search, setSearch ] = useState('')
     //state
     
@@ -186,14 +185,14 @@ function //model-name (props) {
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        { ['ID',...headerTable, 'CreatedAt', 'UpdatedAt', 'Actions'].map((el, index) =>{
+                                        { ['ID',...Object.keys(stateType), 'CreatedAt', 'UpdatedAt', 'Actions'].map((el, index) =>{
                                             return <th key={ index }> {el} </th>
                                         })}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     { rowTable.map( (row, index) => {
-                                        return <RowTable value={ row } index={index} key={ index } key_model={ headerTable } edit={ editData } delete={ deleteData }/>
+                                        return <RowTable value={ row } index={index} key={ index } key_model={ Object.keys(stateType) } edit={ editData } delete={ deleteData }/>
                                     }) }
                                 </tbody>
                             </Table>
@@ -209,9 +208,26 @@ function //model-name (props) {
                 </Modal.Header>
                 <Modal.Body>
                     { Object.keys(stateObj).map((el, index) => {
-                        return  <Form.Group key={ index }>
+                        return (
+                        stateType[el] === 'string' && <Form.Group key={ index }>
                             <Form.Control type="text" placeholder={`Enter ${ el }`} onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el] }/>
+                        </Form.Group> 
+                        ||
+                        stateType[el] === 'boolean' && <Form.Group>
+                        <Form.Label>{`Enter ${ el }`}</Form.Label>
+                            <Form.Control  as="select" onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el]} >
+                                <option>true</option>
+                                <option>false</option>
+                            </Form.Control> 
                         </Form.Group>
+                        ||
+                        stateType[el] === 'text' && <Form.Group >
+                            <Form.Label>Example textarea</Form.Label>
+                            <Form.Control as="textarea" rows="3" />
+                        </Form.Group>
+                        ||
+                        stateType[el] === 'image' && <input type='file'  onChange={ e => funcLoop[index]( e.target.file)}/>
+                    )
                     }) }
                 </Modal.Body>
                 <Modal.Footer>
