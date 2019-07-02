@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc mocha --exit"
   },
   "bin": {
     "sulap": "bin/index.js"
@@ -28,5 +28,10 @@
     "prompts": "^2.1.0",
     "yargonaut": "^1.1.4",
     "yargs": "^13.2.4"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.1"
   }
 }
