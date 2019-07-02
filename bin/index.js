@@ -60,8 +60,8 @@ yargs.command({
                 console.dir(err);
                 return;
             }
-            console.log(boxen(chalk.green(data), { padding: 1, borderColor: 'green', borderStyle: 'round' }));
-
+            console.log(boxen(chalk.green(data)+`\nv.0.1\n\n                 Dibuat oleh: Michael, Doni, Komang, Rido`, { padding: 1, borderColor: 'green', borderStyle: 'round' }));
+            console.log()
             // console.log(chalk.green(data));
         })
     }
