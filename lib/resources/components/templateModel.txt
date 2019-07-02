@@ -116,6 +116,22 @@ function //model-name (props) {
         })
     }
 
+     //function-upload-image
+    function uploadImage(e, functionSetImage){
+        e.preventDefault()
+        let formData = new FormData();
+        formData.append('file', e.target.files[0]);
+        console.log(e.target.files[0])
+        axios.post('/upload', formData, { headers: {token:localStorage.getItem('token')}})
+        .then(({data}) =>{
+            functionSetImage(data.image)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
+    }
+
     function fetchData(){
         setLoading(true)
         axios.get('///model-lower-cases', { headers: { token: localStorage.getItem('token')}})
@@ -213,7 +229,7 @@ function //model-name (props) {
                             <Form.Control type="text" placeholder={`Enter ${ el }`} onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el] }/>
                         </Form.Group> 
                         ||
-                        stateType[el] === 'boolean' && <Form.Group>
+                        stateType[el] === 'boolean' && <Form.Group key={ index }>
                         <Form.Label>{`Enter ${ el }`}</Form.Label>
                             <Form.Control  as="select" onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el]} >
                                 <option>true</option>
@@ -221,12 +237,19 @@ function //model-name (props) {
                             </Form.Control> 
                         </Form.Group>
                         ||
-                        stateType[el] === 'text' && <Form.Group >
-                            <Form.Label>Example textarea</Form.Label>
-                            <Form.Control as="textarea" rows="3" />
+                        stateType[el] === 'text' && <Form.Group key={ index } >
+                            <Form.Label>Enter {el}</Form.Label>
+                            <Form.Control as="textarea" rows="3" onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el]}/>
                         </Form.Group>
                         ||
-                        stateType[el] === 'image' && <input type='file'  onChange={ e => funcLoop[index]( e.target.file)}/>
+                        stateType[el] === 'image' && 
+                        <div key={ index }>
+                            <div style={{ overflow:'hidden', width:'100%', height:'200px', backgroundColor:'#dedede' }} className='mb-2'>
+                                <img width='100%' src={ stateObj[el] ? `http://localhost:3000/uploads/${stateObj[el]}` : null} />
+                            </div>
+                            <input type='file' onChange={ (e) => uploadImage(e, funcLoop[index])}/>
+                            <Button onClick={ (e) =>{ funcLoop[index]('') }}> remove image </Button>
+                        </div>
                     )
                     }) }
                 </Modal.Body>
