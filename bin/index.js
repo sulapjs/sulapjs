@@ -1,7 +1,9 @@
 #! /usr/bin/env node
 
 const yargs = require('yargs')
-
+const boxen = require('boxen')
+const chalk = require('yargonaut').chalk()
+const figlet = require('figlet')
 //commands
 const jreng = require('../lib/commands/jreng')
 const bikinin = require('../lib/commands/bikinin')
@@ -41,5 +43,27 @@ yargs.command({
     handler: argv => bikinin(argv)
 })
 
+
+
+yargs.command({
+    command: 'about',
+    describe: 'tentang sulapjs',
+    handler: () => {
+        figlet.text('SulapJs', {
+            font: 'Univers',
+            horizontalLayout: 'default',
+            verticalLayout: 'default'
+        }, function(err, data) {
+            if (err) {
+                console.log('Something went wrong...');
+                console.dir(err);
+                return;
+            }
+            console.log(boxen(chalk.green(data), { padding: 1, borderColor: 'green', borderStyle: 'round' }));
+
+            // console.log(chalk.green(data));
+        })
+    }
+})
 
 yargs.argv
