@@ -1,4 +1,4 @@
-### EXAMPLE_ROUTES
+### EXAMPLE_CAPS ROUTE
 
 - **GET LIST OF EXAMPLE_CAPS**
   - URL:
@@ -6,66 +6,48 @@
   - URL (filtered):
     - **`GET`** *`/EXAMPLE_ROUTEs?search=<KEYWORD>`*
   - Expected response (status: `200`):
-    ```json
+    ```javascript
       {
         "message": "data found",
         "EXAMPLEs": [
-          {
-            //sulap-add-model
-            "_id": "<id>",
-            "name": "<name>",
-            "description": "<description>",
-            "price": "<price>",
-            "stock": "<stock>",
-            "imageURL": "<imageURL>",
-            "created": "<createdAt>",
-            "updated": "<updatedAt>"
-          }, 
-          {
-            "..."
-          }, 
-          "..."
-        ]
-      }
+        {
+          "_id": "<id>",//sulap-add-model
+          "created": "<date>",
+          "updated": "<date>"
+        }
+      ]}
     ```
   - Error responses:
     - status: `404`:
-      ```json
+      ```javascript
         {
           "message": "..."
         }
       ```
 
-- **CREATE NEW EXAMLE_CAPS**
+- **CREATE NEW EXAMPLE_CAPS**
   - Notes:
     - Authorization: only admin can access
   - URL:
     - **`POST`** *`/EXAMPLE_ROUTEs`*
   - Header(s):
     - `token`: `String`
-  - Body:
-    //sulap-add-moodel
+  - Body://sulap-add-body
   - Expected response (status: `201`):
-    ```json
+    ```javascript
       {
         "message": "data created",
         "newEXAMPLE":
         {
-          //sulap-add-model
-          "_id": "<id>",
-          "name": "<name>",
-          "description": "<description>",
-          "price": "<price>",
-          "stock": "<stock>",
-          "imageURL": "<imageURL>",
-          "created": "<createdAt>",
-          "updated": "<updatedAt>"
+          "_id": "<id>",//sulap-add-model
+          "created": "<date>",
+          "updated": "<date>"
         }
       }
     ```
   - Error responses:
     - status: `400`:
-      ```json
+      ```javascript
       {
         "message": "<authentication message>"
       }
@@ -77,7 +59,7 @@
         - not recognized input data
       - ERROR `400` is also Validation Error caused by entering *empty name* or *empty price* or *empty stock* or *negative value price* or or *negative value stock*
     - status: `401`:
-      ```json
+      ```javascript
       {
         "message": "unauthorized to access"
       }
@@ -87,26 +69,20 @@
   - URL:
     - **`GET`** *`/EXAMPLE_ROUTEs/:id`*
   - Expected response (status: `200`):
-    ```json
+    ```javascript
       {
         "message": "data found",
         "EXAMPLE": 
         {
-          //sulap-add-model
-          "_id": "<id>",
-          "name": "<name>",
-          "description": "<description>",
-          "price": "<price>",
-          "stock": "<stock>",
-          "imageURL": "<imageURL>",
-          "created": "<createdAt>",
-          "updated": "<updatedAt>"
+          "_id": "<id>",//sulap-add-model
+          "created": "<date>",
+          "updated": "<date>"
         }
       }
     ```
   - Error responses:
     - status: `404`:
-      ```json
+      ```javascript
         {
           "message": "data not found"
         }
@@ -123,30 +99,23 @@
         - `PATCH` method is used for updating some details of data
   - Header(s):
     - `token`: `String`
-  - Body:
-    //sulap-add-body
+  - Body://sulap-add-body
   - Expected response (status: `201`):
-    ```json
+    ```javascript
       {
         "message": "data updated",
         "updatedProduct":
         {
-          //sulap-add-model
-          "_id": "<id>",
-          "name": "<name>",
-          "description": "<description>",
-          "price": "<price>",
-          "stock": "<stock>",
-          "imageURL": "<imageURL>",
-          "created": "<createdAt>",
-          "updated": "<updatedAt>"
+          "_id": "<objectID>",//sulap-add-model
+          "created": "<date>",
+          "updated": "<date>"
         },
         "info": "<info-optional>"
       }
     ```
   - Error responses:
     - status: `400`:
-      ```json
+      ```javascript
       {
         "message": "<authentication message>"
       }
@@ -158,13 +127,13 @@
         - not recognized input data
       - ERROR `400` is also Validation Error caused by entering *empty name* or *empty price* or *empty stock* or *negative value price* or or *negative value stock*
     - status: `401`:
-      ```json
+      ```javascript
       {
         "message": "unauthorized to access"
       }
       ```
     - status: `404`:
-      ```json
+      ```javascript
         {
           "message": "data not found"
         }
@@ -178,18 +147,12 @@
   - Header(s):
     - `token`: `String`
   - Expected response (status: `200`):
-    ```json
+    ```javascript
       {
         "message": "data deleted",
         "deletedProduct":
         {
-          //sulap-add-model
-          "_id": "<id>",
-          "name": "<name>",
-          "description": "<description>",
-          "price": "<price>",
-          "stock": "<stock>",
-          "imageURL": "<imageURL>",
+          "_id": "<id>",//sulap-add-model
           "created": "<createdAt>",
           "updated": "<updatedAt>"
         }
@@ -197,7 +160,7 @@
     ```
   - Error responses:
     - status: `400`:
-      ```json
+      ```javascript
       {
         "message": "<authentication message>"
       }
@@ -208,16 +171,16 @@
         - not allowed to access
         - not recognized input data
     - status: `401`:
-      ```json
+      ```javascript
       {
         "message": "unauthorized to access"
       }
       ```
     - status: `404`:
-      ```json
+      ```javascript
         {
           "message": "data not found"
         }
       ```
 
-      [//]: # (comment)
+[comment]: # (reserved for adding new model)

@@ -4,26 +4,26 @@
 server is built on `Express` and `Mongoose` and `Node Js`
 client is build on `React Js`
 
-
 ## Usage
-Make sure you have Node.js and npm installed in your computer and then run these commands:
+Make sure you have Node.js and mongoDB installed in your computer and then run these commands:
 ```console
-$ npm install
-$ npm start
+$ npm install -g sulap
 ```
-For development purpose, you can run:
-```console
-$ npm install
-$ npm run dev
-```
-For testing purpose, you can run:
-```console
-$ npm run test
-```
-Make sure you have set all required your .env parameters
-<br>(key reference: .env.example)
 
-Access the REST API via SERVER_URL = `http://api.plusone.ramdhon.net`
+Then initiate your project with these command (sulap also intall the dependencies for you):
+```console
+$ sulap jreng <project_name>
+```
+
+To run the development server, you can use these commands:
+```console
+$ cd <project_name>
+$ sulap komang
+```
+
+Access the REST API via localhost = `http://localhost:3000`
+
+MongoDB database name can be changed in `./<folder_name>/server/config/index.js`
 
 ## REST API Routes:
 
@@ -31,7 +31,7 @@ Access the REST API via SERVER_URL = `http://api.plusone.ramdhon.net`
 
 - **Register**
   - URL:
-    - **`POST`** *`<SERVER_URL>/register`*
+    - **`POST`** *`/register`*
   - Body:
     - `name`: `String`, required
     - `email`: `String`, required
@@ -63,7 +63,7 @@ Access the REST API via SERVER_URL = `http://api.plusone.ramdhon.net`
 
 - **Login**
   - URL:
-    - **`POST`** *`<SERVER_URL>/login`*
+    - **`POST`** *`/login`*
   - Body:
     - `email`: `String`, required
     - `password`: `String`, required
