@@ -3,7 +3,8 @@ import NavbarDashboard from '../components/NavbarDashboard';
 import { Container, Row, Col } from 'react-bootstrap';
 import SidebarDashboard from '../components/SidebarDashboard';
 import { Route } from 'react-router-dom';
-import DashboardContent from '../components/DashBoardContent'
+import DashboardContent from '../components/DashBoardContent';
+import DashboardHome from '../components/DashboardHome';
 
 function Dashboard(props) {
     return (
@@ -16,8 +17,9 @@ function Dashboard(props) {
                     </Col>
                     <Col lg={10}  style={{ overflow:'scroll'}}>
                         <Container fluid style={{ height:'95vh' }}>
-                            <Route path='/dashboard/:id' component={ DashboardContent }/>
-
+                            {  props.history.location.pathname === '/dashboard' ? <DashboardHome /> : 
+                                <Route path='/dashboard/:id' component={ DashboardContent }/>
+                            }
                         </Container>
                     </Col>
                 </Row>
