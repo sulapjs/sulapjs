@@ -5,8 +5,7 @@ import { server } from '../api/database'
 
 export default function RowTableNewModel(props) {
 
-    let { value, index, key_model } = props
-
+    let { value, index, key_model, type } = props
     key_model = key_model.map( el=> {
         return el.toLowerCase()
     })
@@ -23,14 +22,14 @@ export default function RowTableNewModel(props) {
             <td>{ index+1 }</td>
             { Object.keys(value).map( (el, elIndex) => {
                 return ( el ==='updated' || el ==='created' || el ==='_id' || key_model.includes(el) ? 
-                    <td  align='center' key={ elIndex }>{ el ==='created' || el === 'updated' ?  moment(value[el]).format('MMMM Do YYYY, h:mm:ss a') : (value[el].split('.')[1]  === 'jpeg' || 
-                    value[el].split('.')[1]  === 'jpg' || value[el].split('.')[1]  === 'png' ? 
-                    <Image width="50px" height='50px'src={ `${server}/uploads/${value[el]}`} 
-                        roundedCircle 
-                        class='imagetable'
-                        style={{ cursor:'pointer' }}
-                        onClick={(e) => showModalImage(e, el) }/> 
-                    : value[el]
+                    <td  align='center' key={ elIndex }> 
+                        { el ==='created' || el === 'updated' ?  moment(value[el]).format('MMMM Do YYYY, h:mm:ss a') 
+                        : ( type[el] && type[el].toLowerCase() === 'image' && value[el] ?
+                        <Image width="50px" height='50px'src={ `${server}/uploads/${value[el]}`} 
+                            roundedCircle 
+                            style={{ cursor:'pointer' }}
+                            onClick={(e) => showModalImage(e, el) }/> 
+                        : value[el]
                     )  
                 } </td> : null  )
             })}

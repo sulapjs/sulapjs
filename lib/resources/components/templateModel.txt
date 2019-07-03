@@ -34,7 +34,7 @@ function //model-name (props) {
             axios.patch(`///model-lower-cases/${id}`, stateObj  ,{ headers:{ token:localStorage.getItem('token')}})
             .then(({data}) => {
                 let tempTable = rowTable.map((el,index) => {
-                    if(el._id == data.updated//model-name._id){
+                    if(el._id === data.updated//model-name._id){
                         el = data.updated//model-name
                     }
                     return el;
@@ -220,7 +220,9 @@ function //model-name (props) {
                                         showImage={(e) => setModalImage(e)}//setModalImage} 
                                         key_model={ Object.keys(stateType) } 
                                         edit={ editData } 
-                                        delete={ deleteData }/>
+                                        delete={ deleteData }
+                                        type={ stateType }
+                                        />
                                     }) }
                                 </tbody>
                             </Table>
@@ -231,53 +233,66 @@ function //model-name (props) {
 
         <ImageModal  show={ modalImage } onHide={ setModalImage } title={ imageLink }/>
 
-        <Form >
-            <Modal show={showModal} onHide={handleClose} size="lg">
-                <Modal.Header closeButton>
-                    <Modal.Title>Add //model-name </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    { Object.keys(stateObj).map((el, index) => {
-                        return (
-                        stateType[el] === 'string' && <Form.Group key={ index }>
-                            <Form.Control type="text" placeholder={`Enter ${ el }`} onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el] }/>
-                        </Form.Group> 
-                        ||
-                        stateType[el] === 'boolean' && <Form.Group key={ index }>
+        <Modal show={showModal} onHide={handleClose} size="lg">
+            <Modal.Header closeButton>
+                <Modal.Title>Add Asik </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+            <Form onSubmit={ submitForm }>
+                { Object.keys(stateObj).map((el, index) => {
+                    if ( stateType[el] === 'boolean') {
+                        return (<Form.Group key={ index }>
                         <Form.Label>{`Enter ${ el }`}</Form.Label>
-                            <Form.Control  as="select" onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el]} >
+                            <Form.Control  required as="select" onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el]} >
                                 <option>true</option>
                                 <option>false</option>
                             </Form.Control> 
-                        </Form.Group>
-                        ||
-                        stateType[el] === 'text' && <Form.Group key={ index } >
-                            <Form.Label>Enter {el}</Form.Label>
-                            <Form.Control as="textarea" rows="3" onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el]}/>
-                        </Form.Group>
-                        ||
-                        stateType[el] === 'image' && 
-                        <div key={ index } className='shadow-sm p-2 border'>
-                            <div style={{ overflow:'hidden', width:'100%', height:'200px', backgroundColor:'#dedede' }} className='mb-2'>
-                                <img width='100%' src={ stateObj[el] ? `${server}/uploads/${stateObj[el]}` : null} />
+                        </Form.Group>)
+                    } else if(stateType[el] === 'text'){
+                        return ( 
+                            <Form.Group key={ index } >
+                                <Form.Label>Enter {el}</Form.Label>
+                                <Form.Control required as="textarea" rows="3" onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el]}/>
+                            </Form.Group>
+                        )
+                    } else if(  stateType[el] === 'image' ){
+                        return (
+                            <div key={ index } className='shadow-sm p-2 border'>
+                                <div style={{ overflow:'hidden', width:'100%', height:'200px', backgroundColor:'#dedede' }} className='mb-2'>
+                                    <img width='100%' src={ stateObj[el] ? `${server}/uploads/${stateObj[el]}` : null} />
+                                </div>
+                                <input type='file' onChange={ (e) => uploadImage(e, funcLoop[index])} className='mb-2 border p-1' style={{ width:'100%' }}/>
+                                <br />
+                                <Button size='sm' variant='danger' onClick={ (e) =>{ funcLoop[index]('') }}> remove image </Button>
                             </div>
-                            <input type='file' onChange={ (e) => uploadImage(e, funcLoop[index])} className='mb-2 border p-1' style={{ width:'100%' }}/>
-                            <br />
-                            <Button size='sm' variant='danger' onClick={ (e) =>{ funcLoop[index]('') }}> remove image </Button>
-                        </div>
-                    )
-                    }) }
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={ submitForm }>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
-            </Modal>                                 
-        </Form>               
+                        )
+                    } else if( stateType[el] === 'number' ){
+                        return (
+                            <Form.Group key={ index } className='mt-2'>
+                                <Form.Control required type="number" placeholder={`Enter ${ el }`} onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el] }/>
+                            </Form.Group> )
+                    }
+                    else {
+                        return (
+                        <Form.Group key={ index } className='mt-2'>
+                            <Form.Control required type="text" placeholder={`Enter ${ el }`} onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el] }/>
+                        </Form.Group> )
+                    }
+                    }) 
+                }
+                <Row className='mt-5'>
+                    <Col className='d-flex justify-content-end'>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" type='submit' className='ml-2'>
+                            Save Changes
+                        </Button>
+                    </Col>
+                </Row>
+                </Form>   
+            </Modal.Body>
+        </Modal>                                   
         </>
     );
 }
