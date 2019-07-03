@@ -3,6 +3,8 @@ import { Container, Table, Button, Row, Col, Modal, Form, Spinner } from 'react-
 import RowTable from './RowTableNewModel';
 import axios from '../api/database';
 import Toast from './ToastComponent';
+import { server } from '../api/database';
+import ImageModal from './ImageModal'
 
 function //model-name (props) {
 
@@ -11,6 +13,8 @@ function //model-name (props) {
     //state-name
     const [ search, setSearch ] = useState('')
     //state
+    const [ modalImage, setModalImage ] = useState(false)
+    const [ imageLink, setImageLink ] = useState('')
     
     const [ id , setId ] = useState('')
     const [ loading, setLoading ] = useState(false)
@@ -208,7 +212,15 @@ function //model-name (props) {
                                 </thead>
                                 <tbody>
                                     { rowTable.map( (row, index) => {
-                                        return <RowTable value={ row } index={index} key={ index } key_model={ Object.keys(stateType) } edit={ editData } delete={ deleteData }/>
+                                        return <RowTable 
+                                        value={ row } 
+                                        imageLink={setImageLink} 
+                                        index={index} 
+                                        key={ index } 
+                                        showImage={(e) => setModalImage(e)}//setModalImage} 
+                                        key_model={ Object.keys(stateType) } 
+                                        edit={ editData } 
+                                        delete={ deleteData }/>
                                     }) }
                                 </tbody>
                             </Table>
@@ -217,8 +229,10 @@ function //model-name (props) {
                 </Container>
         }
 
+        <ImageModal  show={ modalImage } onHide={ setModalImage } title={ imageLink }/>
+
         <Form >
-            <Modal show={showModal} onHide={handleClose}>
+            <Modal show={showModal} onHide={handleClose} size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title>Add //model-name </Modal.Title>
                 </Modal.Header>
@@ -243,12 +257,13 @@ function //model-name (props) {
                         </Form.Group>
                         ||
                         stateType[el] === 'image' && 
-                        <div key={ index }>
+                        <div key={ index } className='shadow-sm p-2 border'>
                             <div style={{ overflow:'hidden', width:'100%', height:'200px', backgroundColor:'#dedede' }} className='mb-2'>
-                                <img width='100%' src={ stateObj[el] ? `http://localhost:3000/uploads/${stateObj[el]}` : null} />
+                                <img width='100%' src={ stateObj[el] ? `${server}/uploads/${stateObj[el]}` : null} />
                             </div>
-                            <input type='file' onChange={ (e) => uploadImage(e, funcLoop[index])}/>
-                            <Button onClick={ (e) =>{ funcLoop[index]('') }}> remove image </Button>
+                            <input type='file' onChange={ (e) => uploadImage(e, funcLoop[index])} className='mb-2 border p-1' style={{ width:'100%' }}/>
+                            <br />
+                            <Button size='sm' variant='danger' onClick={ (e) =>{ funcLoop[index]('') }}> remove image </Button>
                         </div>
                     )
                     }) }
