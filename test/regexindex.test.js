@@ -8,13 +8,13 @@ const regex = require('../lib/functions/regex');
 
 describe('TO Pascal Case', function() {
   it(`returns 'Pascal' with input 'pascal'`, function() {
-    expect(regex.toPascalCase('pascal')).to.equals('Pascal');
+    expect(regex.toPascalCase('pascal')).to.equal('Pascal');
   })
   it(`returns 'Pascal-Again' with input 'pascal-again'`, function() {
-    expect(regex.toPascalCase('pascal-again')).to.equals('Pascal-Again');
+    expect(regex.toPascalCase('pascal-again')).to.equal('Pascal-Again');
   })
   it(`returns 'Pascal Again' with input 'pascal again'`, function() {
-    expect(regex.toPascalCase('pascal again')).to.equals('Pascal Again');
+    expect(regex.toPascalCase('pascal again')).to.equal('Pascal Again');
   })
 })
 
@@ -32,8 +32,8 @@ describe('READ AND WRITE FILE', function() {
       regex.writeFile(sample, `console.log('sample')`);
       const read = fs.readFileSync(dirpath, 'utf8');
 
-      expect(fse.existsSync(dirpath)).to.equals(true);
-      expect(read).to.equals(`console.log('sample')`);
+      expect(fse.existsSync(dirpath)).to.equal(true);
+      expect(read).to.equal(`console.log('sample')`);
     })
   })
   
@@ -48,7 +48,7 @@ describe('READ AND WRITE FILE', function() {
     })
 
     it('successfully reads file', function() {
-      expect(regex.readFile(sample)).to.equals(`console.log('sample')`);
+      expect(regex.readFile(sample)).to.equal(`console.log('sample')`);
     })
   })
 })

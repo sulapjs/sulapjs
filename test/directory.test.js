@@ -27,7 +27,7 @@ describe('COPY', function () {
     const dirpath = path.join(process.cwd(), destFolder);
     directory.copyDirectory(`../../${srcFolder}`, destFolder);
 
-    expect(fse.existsSync(dirpath)).to.equals(true);
+    expect(fse.existsSync(dirpath)).to.equal(true);
   })
 })
 
@@ -43,9 +43,9 @@ describe('CREATE', function () {
     const dirpath = path.join(process.cwd(), newFolder);
     const feedback = directory.createFolder(newFolder);
 
-    expect(fse.existsSync(dirpath)).to.equals(true);
+    expect(fse.existsSync(dirpath)).to.equal(true);
     expect(feedback).to.be.an('object');
-    expect(feedback.message).to.equals('folder created')
+    expect(feedback.message).to.equal('folder created')
   })
 
   it('fails creating folder, folder is existed', function() {
@@ -53,7 +53,7 @@ describe('CREATE', function () {
 
     const feedback = directory.createFolder(newFolder);
     expect(feedback).to.be.an('object');
-    expect(feedback.message).to.equals('folder already exists')
+    expect(feedback.message).to.equal('folder already exists')
   })
 })
 
@@ -62,7 +62,7 @@ describe('PATH', function () {
 
   it('gets CWD path joined with relative path', function() {
     const dirpath = path.join(process.cwd(), newFolder);
-    expect(directory.cwdPath(newFolder)).to.equals(dirpath);
+    expect(directory.cwdPath(newFolder)).to.equal(dirpath);
   })
 
   it('gets dirpath joined with relative path', function() {
@@ -70,6 +70,6 @@ describe('PATH', function () {
     const dirpath = path.join(dirname, newFolder);
     // console.log(directory.dirPath(newFolder));
     // console.log(dirpath);
-    expect(directory.dirPath(newFolder)).to.equals(dirpath);
+    expect(directory.dirPath(newFolder)).to.equal(dirpath);
   })
 })
