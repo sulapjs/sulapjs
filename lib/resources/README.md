@@ -4,26 +4,26 @@
 server is built on `Express` and `Mongoose` and `Node Js`
 client is build on `React Js`
 
+
 ## Usage
-Make sure you have Node.js and mongoDB installed in your computer and then run these commands:
+Make sure you have Node.js and npm installed in your computer and then run these commands:
 ```console
-$ npm install -g sulap
+$ npm install
+$ npm start
 ```
-
-Then initiate your project with these command (sulap also intall the dependencies for you):
+For development purpose, you can run:
 ```console
-$ sulap jreng <project_name>
+$ npm install
+$ npm run dev
 ```
-
-To run the development server, you can use these commands:
+For testing purpose, you can run:
 ```console
-$ cd <project_name>
-$ sulap komang
+$ npm run test
 ```
+Make sure you have set all required your .env parameters
+<br>(key reference: .env.example)
 
-Access the REST API via localhost = `http://localhost:3000`
-
-MongoDB database name can be changed in `./<folder_name>/server/config/index.js`
+Access the REST API via SERVER_URL = `http://api.plusone.ramdhon.net`
 
 ## REST API Routes:
 
@@ -31,7 +31,7 @@ MongoDB database name can be changed in `./<folder_name>/server/config/index.js`
 
 - **Register**
   - URL:
-    - **`POST`** *`/register`*
+    - **`POST`** *`<SERVER_URL>/register`*
   - Body:
     - `name`: `String`, required
     - `email`: `String`, required
@@ -63,7 +63,7 @@ MongoDB database name can be changed in `./<folder_name>/server/config/index.js`
 
 - **Login**
   - URL:
-    - **`POST`** *`/login`*
+    - **`POST`** *`<SERVER_URL>/login`*
   - Body:
     - `email`: `String`, required
     - `password`: `String`, required
