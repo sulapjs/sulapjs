@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from '../api/database';
 import Toast from './ToastComponent';
 import ChartComponent from './ChartComponent';
+import axios from '../api/database';
 
 function randomColor() {
     var r = Math.floor(Math.random() * 256);
