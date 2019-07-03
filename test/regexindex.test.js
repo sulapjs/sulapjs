@@ -26,23 +26,27 @@ describe('READ AND WRITE FILE', function() {
   after(function() {
     fse.removeSync(dirpath);
   })
-  describe('WRITE FILE', function() {
-    regex.writeFile(sample, `console.log('sample')`);
-    const read = fs.readFileSync(dirpath, 'utf8');
 
+  describe('WRITE FILE', function() {
     it('successfully writes file', function() {
+      regex.writeFile(sample, `console.log('sample')`);
+      const read = fs.readFileSync(dirpath, 'utf8');
+
       expect(fse.existsSync(dirpath)).to.equals(true);
       expect(read).to.equals(`console.log('sample')`);
     })
   })
+  
   describe('READ FILE', function() {
     const destpath = path.join(dirname, sample);
+
     before(function() {
       fs.writeFileSync(destpath, `console.log('sample')`)
     })
     after(function() {
       fse.removeSync(destpath);
     })
+
     it('successfully reads file', function() {
       expect(regex.readFile(sample)).to.equals(`console.log('sample')`);
     })
