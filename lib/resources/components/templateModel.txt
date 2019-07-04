@@ -252,7 +252,7 @@ function //model-name (props) {
                         return ( 
                             <Form.Group key={ index } >
                                 <Form.Label>Enter {el}</Form.Label>
-                                <Form.Control required as="textarea" rows="3" onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el]}/>
+                                <Form.Control as="textarea" rows="3" onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el]}/>
                             </Form.Group>
                         )
                     } else if(  stateType[el] === 'image' ){
@@ -275,7 +275,7 @@ function //model-name (props) {
                     else {
                         return (
                         <Form.Group key={ index } className='mt-2'>
-                            <Form.Control required type="text" placeholder={`Enter ${ el }`} onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el] }/>
+                            <Form.Control type="text" placeholder={`Enter ${ el }`} onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el] }/>
                         </Form.Group> )
                     }
                     }) 

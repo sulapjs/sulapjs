@@ -29,11 +29,11 @@ export default function RowTableNewModel(props) {
                             roundedCircle 
                             style={{ cursor:'pointer' }}
                             onClick={(e) => showModalImage(e, el) }/> 
-                        : value[el]
+                        : ( type[el] && type[el].toLowerCase() === 'boolean' ? JSON.stringify(value[el]) : value[el] )
                     )  
                 } </td> : null  )
             })}
-            <td colSpan={2}> <Button size='sm' onClick={(e) => props.edit(value)}><i className="fas fa-edit"></i></Button> <Button size='sm' onClick={(e) => props.delete(value._id)}><i className="fas fa-trash"></i></Button> </td>
+            <td align='center' colSpan={2}> <Button className='m-1' size='sm' onClick={(e) => props.edit(value)}><i className="fas fa-edit"></i></Button> <Button size='sm' onClick={(e) => props.delete(value._id)}><i className="fas fa-trash"></i></Button> </td>
         </tr>  
         </>
     )

@@ -28,9 +28,11 @@ function DashboardHome(props) {
             let tempDataChart = []
             let tempBackground = []
             data.forEach( item => {
-                tempDataChart.push(item.data[Object.keys(item.data)[0]].length)
-                tempLabels.push(Object.keys(item.data)[0])
-                tempBackground.push(randomColor())
+                if(Object.keys(item.data).length !== 1 ){
+                    tempDataChart.push(item.data[Object.keys(item.data)[0]].length)
+                    tempLabels.push(Object.keys(item.data)[0])
+                    tempBackground.push(randomColor())
+                }
             })
             setLabels(tempLabels)
             setBackgroundChart(tempBackground)
