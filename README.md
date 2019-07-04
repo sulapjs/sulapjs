@@ -1,4 +1,4 @@
-# sulap
+# Sulap Js
 
 <image src="https://storage.googleapis.com/sulapjs/sulapjs-logo.png"
   alt="sulap-js-logo">
@@ -18,8 +18,8 @@ Then initiate your project with these command (sulap also intall the dependencie
 $ sulap jreng <project_name>
 ```
 
-To run the development server, you can use these commands:
-```console
+After sulap's done creating your project folder, to run the development server, you can use these commands:
+```
 $ cd <project_name>
 $ sulap poof
 ```
