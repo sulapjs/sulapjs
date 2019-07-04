@@ -21,7 +21,7 @@ $ sulap jreng <project_name>
 To run the development server, you can use these commands:
 ```console
 $ cd <project_name>
-$ sulap komang
+$ sulap poof
 ```
 
 Access the REST API via localhost = `http://localhost:3000`

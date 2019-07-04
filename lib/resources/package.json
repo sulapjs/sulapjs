@@ -6,7 +6,7 @@
   "scripts": {
     "server": "cd server && npm run dev",
     "client": "cd client && yarn start",
-    "komang": "yarn server & yarn client",
+    "poof": "yarn server & yarn client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

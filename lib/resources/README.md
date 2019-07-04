@@ -6,24 +6,14 @@ client is build on `React Js`
 
 
 ## Usage
-Make sure you have Node.js and npm installed in your computer and then run these commands:
+To run the development server, you can use these commands:
 ```console
-$ npm install
-$ npm start
+$ cd <project_name>
+$ sulap poof
 ```
-For development purpose, you can run:
-```console
-$ npm install
-$ npm run dev
-```
-For testing purpose, you can run:
-```console
-$ npm run test
-```
-Make sure you have set all required your .env parameters
-<br>(key reference: .env.example)
 
-Access the REST API via SERVER_URL = `http://api.plusone.ramdhon.net`
+Access the REST API via localhost = `http://localhost:3000`
+
 
 ## REST API Routes:
 
@@ -31,7 +21,7 @@ Access the REST API via SERVER_URL = `http://api.plusone.ramdhon.net`
 
 - **Register**
   - URL:
-    - **`POST`** *`<SERVER_URL>/register`*
+    - **`POST`** *`/register`*
   - Body:
     - `name`: `String`, required
     - `email`: `String`, required
@@ -63,7 +53,7 @@ Access the REST API via SERVER_URL = `http://api.plusone.ramdhon.net`
 
 - **Login**
   - URL:
-    - **`POST`** *`<SERVER_URL>/login`*
+    - **`POST`** *`/login`*
   - Body:
     - `email`: `String`, required
     - `password`: `String`, required
