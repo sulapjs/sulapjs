@@ -22,7 +22,47 @@ describe('REGEX CLIENT', function() {
       name: 'status',
       type: 'boolean',
     },
+    {
+      name: 'score',
+      type: 'number',
+    },
   ]
+
+  describe('EDIT DASHBOARD HOME', function() {
+    const component = 'DashboardHome.js';
+    const srcpath = path.join(__dirname, '../cms/client/sulap-frontend/src/components/DashboardHome.js');
+    const destpath = path.join(process.cwd(), component);
+    const oriComponent = fs.readFileSync(srcpath, 'utf8');
+
+    before(function() {
+      fse.copySync(srcpath, destpath);
+    })
+    after(function() {
+      fse.removeSync(destpath);
+    })
+    
+    it('successfully edits dashboard home', function() {
+      const feedback = regexclient.editDashboardHome(component, modelName, sample);
+      const replaced = fs.readFileSync(destpath, 'utf8');
+
+      expect(fse.existsSync(destpath)).to.equal(true);
+      expect(replaced).not.to.equal(oriComponent);
+      expect(feedback).to.be.an('object');
+      expect(feedback).to.have.property('message');
+      expect(feedback.message).to.equal('created');
+    })
+
+    it('fails editing dashboard home', function() {
+      const samplepath = (process.cwd(), sample);
+      fs.writeFileSync(samplepath, `\/\/${sample}`);
+      const feedback = regexclient.editDashboardHome(component, modelName, sample);
+
+      expect(feedback).to.be.an('object');
+      expect(feedback).to.have.property('message');
+      expect(feedback.message).to.equal('file already exist');
+      fse.removeSync(samplepath);      
+    })
+  })
 
   describe('CHANGE CLIENT ROUTE', function() {
     const component = 'DashBoardContent.js';

@@ -92,7 +92,7 @@ describe('REGEX SERVER', function() {
     })
   })
 
-  describe('ADDING NEW MODEL CONTROLLER AND SCHEMA', function() {
+  describe('ADDING NEW MODEL CONTROLLER, SCHEMA, GENERATING DOC', function() {
     const destrelpath = 'index.js';
     const modelName = 'sample';
     const dirpath = path.join(process.cwd(), destrelpath);
@@ -109,6 +109,10 @@ describe('REGEX SERVER', function() {
       {
         name: 'photo',
         type: 'image',
+      },
+      {
+        name: 'score',
+        type: 'number',
       },
     ]
 
@@ -163,6 +167,38 @@ describe('REGEX SERVER', function() {
         expect(feedback).to.be.an('object');
         expect(feedback).to.have.property('message');
         expect(feedback.message).to.equal('file exists, remove or rename file first');
+      })
+    })
+
+    describe('GENERATING DOCUMENTATION REST API', function() {
+      const srcrelpath = '../../resources/example-readme.md';
+      const srcpath = path.join(dirname, srcrelpath);
+      const srcFile = fs.readFileSync(srcpath, 'utf8');
+      const mdrel = 'sample.md';
+      const mdpath =  path.join(process.cwd(), mdrel);
+
+      before(function() {
+        fs.writeFileSync(mdpath, '# sample.md');
+      })
+      afterEach(function() {
+        fse.removeSync(mdpath);
+      })
+
+      it('successfully generates documentation from template with injected model name', function() {
+        const feedback = regexserver.generateDocumentation(srcrelpath, mdrel, modelName, attributes);
+
+        expect(fse.existsSync(mdpath)).to.equal(true);
+        expect(fs.readFileSync(mdpath, 'utf8')).to.not.equal(srcFile);
+        expect(feedback).to.be.an('object');
+        expect(feedback).to.have.property('message');
+        expect(feedback.message).to.equal('readme created');
+      })
+      it('fails generating documentation from template with injected model name', function() {
+        const feedback = regexserver.generateDocumentation(srcrelpath, mdrel, modelName, attributes);
+  
+        expect(feedback).to.be.an('object');
+        expect(feedback).to.have.property('message');
+        expect(feedback.message).to.equal('no readme detected not exists');
       })
     })
   })
