@@ -65,7 +65,7 @@
       }
       ```
     
-- **GET PRODUCT BY ID**
+- **GET EXAMPLE_CAPS BY ID**
   - URL:
     - **`GET`** *`/EXAMPLE_ROUTEs/:id`*
   - Expected response (status: `200`):
@@ -88,7 +88,7 @@
         }
       ```
 
-- **UPDATE PRODUCT BY ID**
+- **UPDATE EXAMPLE_CAPS BY ID**
   - Notes:
     - Authorization: only admin can access
   - URL(s):
@@ -104,7 +104,7 @@
     ```javascript
       {
         "message": "data updated",
-        "updatedProduct":
+        "updatedEXAMPLE":
         {
           "_id": "<objectID>",//sulap-add-model
           "created": "<date>",
@@ -139,7 +139,7 @@
         }
       ```
 
-- **DELETE PRODUCT BY ID**
+- **DELETE EXAMPLE_CAPS BY ID**
   - Notes:
     - Authorization: only admin can access
   - URL(s):
@@ -150,7 +150,7 @@
     ```javascript
       {
         "message": "data deleted",
-        "deletedProduct":
+        "deletedEXAMPLE":
         {
           "_id": "<id>",//sulap-add-model
           "created": "<createdAt>",
