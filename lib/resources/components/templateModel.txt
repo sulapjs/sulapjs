@@ -243,7 +243,7 @@ function //model-name (props) {
                     if ( stateType[el] === 'boolean') {
                         return (<Form.Group key={ index }>
                         <Form.Label>{`Enter ${ el }`}</Form.Label>
-                            <Form.Control  required as="select" onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el]} >
+                            <Form.Control required as="select" onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el]} >
                                 <option>true</option>
                                 <option>false</option>
                             </Form.Control> 

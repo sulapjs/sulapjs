@@ -77,8 +77,8 @@ export default function Register(props) {
                             </Form.Group>
 
                             <Form.Group controlId="formBasicPassword">
-                                <Form.Label>Username</Form.Label>
-                                <Form.Control type="text" placeholder="Username" value={ name } onChange={ (e) => setName(e.target.value) }/>
+                                <Form.Label>Full Name</Form.Label>
+                                <Form.Control type="text" placeholder="Full Name" value={ name } onChange={ (e) => setName(e.target.value) }/>
                             </Form.Group>
 
                             <Form.Group controlId="formBasicPassword">
