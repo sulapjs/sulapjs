@@ -235,7 +235,7 @@ function //model-name (props) {
 
         <Modal show={showModal} onHide={handleClose} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title>Add Asik </Modal.Title>
+                <Modal.Title>Add //model-name </Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Form onSubmit={ submitForm }>
@@ -261,6 +261,7 @@ function //model-name (props) {
                                 <div style={{ overflow:'hidden', width:'100%', height:'200px', backgroundColor:'#dedede' }} className='mb-2'>
                                     <img width='100%' src={ stateObj[el] ? `${server}/uploads/${stateObj[el]}` : null} />
                                 </div>
+                                <Form.Label>Attach {el}</Form.Label>
                                 <input type='file' onChange={ (e) => uploadImage(e, funcLoop[index])} className='mb-2 border p-1' style={{ width:'100%' }}/>
                                 <br />
                                 <Button size='sm' variant='danger' onClick={ (e) =>{ funcLoop[index]('') }}> remove image </Button>
@@ -269,12 +270,14 @@ function //model-name (props) {
                     } else if( stateType[el] === 'number' ){
                         return (
                             <Form.Group key={ index } className='mt-2'>
+                                <Form.Label>Enter {el}</Form.Label>
                                 <Form.Control required type="number" placeholder={`Enter ${ el }`} onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el] }/>
                             </Form.Group> )
                     }
                     else {
                         return (
                         <Form.Group key={ index } className='mt-2'>
+                            <Form.Label>Enter {el}</Form.Label>
                             <Form.Control type="text" placeholder={`Enter ${ el }`} onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el] }/>
                         </Form.Group> )
                     }

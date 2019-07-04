@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../components/NavbarHeader';
 import HomePage from '../components/Homepage';
 
-export default function Home() {
+export default function Home(props) {
+
+    useEffect(() => {
+        if(localStorage.getItem('token')){
+            props.history.push('/dashboard')
+        }
+    }, [])
+
     return (
         <>
             <Navbar />

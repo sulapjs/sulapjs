@@ -52,7 +52,7 @@ export default function Login(props) {
             <Row className='justify-content-center'>
                 <Col lg={6}>
                     <div  style={ styles.headerForm }>
-                       <Link to='/'><h3 style={ styles.fontHeader }> SULAP-JS <b>LOGIN</b> </h3></Link>
+                    <Link to='/'><h3 style={ styles.fontHeader }> SULAP-JS <b>LOGIN</b> </h3></Link>
                     </div>
                 </Col>
             </Row>
@@ -74,11 +74,16 @@ export default function Login(props) {
                             
                             <Row>
                                 <Col lg={4}>
-                                <Button block variant="primary" type="submit" className='shadow-sm'>
-                                    Login
-                                </Button>
+                                    <Button block variant="primary" type="submit" className='shadow-sm'>
+                                        Login
+                                    </Button>
                                 </Col>
-                                <Col lg={8} className='d-flex justify-content-center align-items-center'>
+                                <Col lg={2} style={{ padding:0 }}>
+                                    <Link to='/'>
+                                        <Button block variant='secondary'> <i className="fas fa-home"></i> </Button>
+                                    </Link>
+                                </Col>
+                                <Col lg={5} className='d-flex justify-content-center align-items-center'>
                                     <Link to='/register'> 
                                         <Form.Text className="text-muted" >
                                             don't have an account ?
@@ -88,6 +93,7 @@ export default function Login(props) {
                             </Row>
                             
                         </Form>
+                        
                     </div>
                 </Col>
             </Row>
