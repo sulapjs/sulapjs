@@ -1,10 +1,13 @@
 # sulap
 
+<image src="https://storage.googleapis.com/sulapjs/sulapjs-logo.png"
+  alt="sulap-js-logo">
 
-server is built on `Express` and `Mongoose` and `Node Js`
-client is build on `React Js`
 
-## Usage
+Sulap JS is a Content Management System Generator written in JavaScript which provides users an instant client-server website model. It includes user management system and simple CRUD model. The package also provides users to put some options or configuration while initiating their website. Client template is built on `React Js`, while server template is built on `Express Js` and `Node Js` with MongoDB and Mongoose as ODM. Sulap is created for assisting users or developers to save their time developing new website. By using few commands, in the future, user is able to build a simple client-server website. Do less, gain more!
+
+
+## Quick Start
 Make sure you have Node.js and mongoDB installed in your computer and then run these commands:
 ```console
 $ npm install -g sulap
@@ -22,64 +25,6 @@ $ sulap komang
 ```
 
 Access the REST API via localhost = `http://localhost:3000`
+Documentation can be found in `./<folder_name>/README.md`
 
 MongoDB database name can be changed in `./<folder_name>/server/config/index.js`
-
-## REST API Routes:
-
-### AUTHENTICATION
-
-- **Register**
-  - URL:
-    - **`POST`** *`/register`*
-  - Body:
-    - `name`: `String`, required
-    - `email`: `String`, required
-    - `password`: `String`, required
-    - `role`: `String`, required
-  - Expected response (status: `201`):
-    ```json
-      {
-        "message": "account registered",
-        "newUser":
-        {
-          "_id": "<generatedId>",
-          "name": "<registeredName>",
-          "email": "<registeredEmail>",
-          "password": "<hashedPassword>",
-          "role": "<registeredRole>"
-        }
-      }
-    ```
-  - Error responses:
-    - status: `400`:
-      ```json
-      {
-        "message": "<detailedErrors>"
-      }
-      ```
-      Notes:
-      - ERROR `400` is caused by entering *empty name* or *empty email* or *duplicated email* or *email not valid format* or *empty password* or *empty role*
-
-- **Login**
-  - URL:
-    - **`POST`** *`/login`*
-  - Body:
-    - `email`: `String`, required
-    - `password`: `String`, required
-  - Expected response (status: `200`):
-    ```json
-      {
-        "message": "login success",
-        "token": "<accessToken>"
-      }
-    ```
-  - Error responses:
-    - status: `400`:
-      ```json
-      {
-        "message": "invalid username / password"
-      }
-      ```
-
-[comment]: # (reserved for adding new model)
