@@ -62,9 +62,6 @@ function //model-name (props) {
     
             let tempRow = [ ...rowTable, stateObj ]
             setRowTable(tempRow)
-            funcLoop.map( func => (
-                func('')
-            ))
         }
         handleClose()
     }
@@ -89,9 +86,16 @@ function //model-name (props) {
 
     function handleClose() {
         setShowModal(false);
-        funcLoop.map( func => (
-            func('')
-        ))
+        let tempKey = Object.keys(stateType)
+        funcLoop.map((func,index) => {
+            if(''+stateType[tempKey[index]] === 'boolean'){
+                func(false)
+            } else if (''+stateType[tempKey[index]] === 'number'){
+                func(0)
+            } else {
+                func('')
+            }
+        })
         setId('')
     }
     
@@ -244,8 +248,8 @@ function //model-name (props) {
                         return (<Form.Group key={ index }>
                         <Form.Label>{`Enter ${ el }`}</Form.Label>
                             <Form.Control required as="select" onChange={ e => funcLoop[index]( e.target.value)} value={ stateObj[el]} >
-                                <option>true</option>
-                                <option>false</option>
+                                <option value='true'>true</option>
+                                <option value='false'>false</option>
                             </Form.Control> 
                         </Form.Group>)
                     } else if(stateType[el] === 'text'){
