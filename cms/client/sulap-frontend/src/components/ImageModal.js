@@ -11,6 +11,7 @@ function ImageModal(props) {
             centered
         >
             <Modal.Header closeButton>
+                { props.title }
             </Modal.Header>
             <Modal.Body>
                 <img src={ props.title }  width='100%' />
